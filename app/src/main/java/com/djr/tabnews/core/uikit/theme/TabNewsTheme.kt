@@ -1,4 +1,4 @@
-package com.djr.tabnews.uikit.theme
+package com.djr.tabnews.core.uikit.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.compositionLocalOf
-import com.djr.tabnews.uikit.theme.tokens.TabNewsColors
-import com.djr.tabnews.uikit.theme.tokens.TabNewsSpacing
+import com.djr.tabnews.core.uikit.theme.tokens.TabNewsColors
+import com.djr.tabnews.core.uikit.theme.tokens.TabNewsSpacing
 
 val LocalColors = compositionLocalOf { TabNewsColors() }
 val LocalSpacing = compositionLocalOf { TabNewsSpacing() }

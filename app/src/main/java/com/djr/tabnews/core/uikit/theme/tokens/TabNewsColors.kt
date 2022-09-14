@@ -1,10 +1,11 @@
-package com.djr.tabnews.uikit.theme.tokens
+package com.djr.tabnews.core.uikit.theme.tokens
 
 import androidx.compose.ui.graphics.Color
 
 data class TabNewsColors(
     val primaryBg: Color = Color(0xFF1B1F23),
     val secondaryBg: Color = Color(0xFF24292E),
+    val   highlight: Color = Color(0xFF2188FF),
 
     val borderDark: Color = Color(0xFF444D56),
     val borderNeutral: Color = Color(0xFFD1D5DA),

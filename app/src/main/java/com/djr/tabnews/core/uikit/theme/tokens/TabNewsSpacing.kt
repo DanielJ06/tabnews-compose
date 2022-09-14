@@ -1,4 +1,4 @@
-package com.djr.tabnews.uikit.theme.tokens
+package com.djr.tabnews.core.uikit.theme.tokens
 
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
