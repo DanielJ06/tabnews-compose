@@ -9,7 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import com.djr.tabnews.core.navigation.RootDestinations
 import com.djr.tabnews.core.navigation.graphs.addBookmarkNavGraph
 import com.djr.tabnews.core.navigation.graphs.addHomeNavGraph
-import com.djr.tabnews.core.uikit.components.TabBottomBar
+import com.djr.tabnews.core.uikit.components.tn_bottom_bar.TnBottomBar
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
 
             Scaffold(
-                bottomBar = { TabBottomBar(navController) }
+                bottomBar = { TnBottomBar(navController) }
             ) {
                 NavHost(
                     navController = navController,
