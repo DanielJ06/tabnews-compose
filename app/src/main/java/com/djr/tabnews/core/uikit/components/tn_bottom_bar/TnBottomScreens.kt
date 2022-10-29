@@ -1,7 +1,6 @@
 package com.djr.tabnews.core.uikit.components.tn_bottom_bar
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -27,6 +26,7 @@ sealed class TnBottomScreens(
         icon = Icons.Default.Home,
         allRoutes = listOf(
             GraphDestinations.MainRoutes.Main.createRoute(),
+            GraphDestinations.MainRoutes.ContentDetails.createRoute()
         )
     )
 
@@ -35,14 +35,6 @@ sealed class TnBottomScreens(
         icon = Icons.Default.Favorite,
         allRoutes = listOf(
             GraphDestinations.BookmarkRoutes.Bookmarked.createRoute()
-        )
-    )
-
-    object Teste : TnBottomScreens(
-        route = GraphDestinations.MainRoutes.ContentDetails.createRoute(),
-        icon = Icons.Default.Face,
-        allRoutes = listOf(
-            GraphDestinations.MainRoutes.ContentDetails.createRoute(),
         )
     )
 

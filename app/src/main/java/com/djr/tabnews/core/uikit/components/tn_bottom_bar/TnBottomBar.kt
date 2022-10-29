@@ -4,7 +4,10 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -18,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.unit.dp
@@ -33,34 +37,19 @@ fun TnBottomBar(navController: NavController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val coroutineScope = rememberCoroutineScope()
 
-    val screens = listOf(
+    val iconCoordinates = remember { Animatable(0f) }
+
+    val topDestinationScreens = listOf(
         TnBottomScreens.Home,
-        TnBottomScreens.Bookmark,
-        TnBottomScreens.Teste
+        TnBottomScreens.Bookmark
     )
 
-    val iconCoordination = remember { Animatable(0f) }
-
-    val indicatorColor = TabNewsTheme.colors.highlight
-    val dpT = 8.dp
-
     Column {
-
-        Canvas(
-            modifier = Modifier
-                .height(dpT)
-                .fillMaxWidth()
-        ) {
-            drawRoundRect(
-                color = indicatorColor,
-                size = Size(width = 66f, height = dpT.toPx()),
-                topLeft = Offset(x = iconCoordination.value, y = 0f),
-                cornerRadius = CornerRadius(33f, 33f)
-            )
-        }
-
-        Spacer(modifier = Modifier.height(5.dp))
-
+        FloatingIndicatorPill(
+            indicatorColor = TabNewsTheme.colors.highlight,
+            pillSize = Size(width = 150f, height = 8.dp.value),
+            axisXCoordinates = iconCoordinates.value
+        )
         BottomNavigation(
             backgroundColor = TabNewsTheme.colors.secondaryBg,
             contentColor = TabNewsTheme.colors.borderLight,
@@ -72,7 +61,7 @@ fun TnBottomBar(navController: NavController) {
                     )
                 )
         ) {
-            screens.forEach { screen ->
+            topDestinationScreens.forEach { screen ->
                 val currentDestination = navBackStackEntry?.destination
                 val isSelected = currentDestination?.hierarchy?.any {
                     screen.verifyRoutes(it.route)
@@ -88,10 +77,10 @@ fun TnBottomBar(navController: NavController) {
 
                 if (isSelected) {
                     coroutineScope.launch {
-                        iconCoordination.animateTo(
+                        iconCoordinates.animateTo(
                             selectedPosition,
                             animationSpec = tween(
-                                durationMillis = 600,
+                                durationMillis = 150,
                                 easing = CubicBezierEasing(.57f, .21f, .69f, 1.25f)
                             )
                         )
@@ -108,20 +97,20 @@ fun TnBottomBar(navController: NavController) {
                             modifier = Modifier
                                 .size(TabNewsTheme.spacing.Xxs)
                                 .onGloballyPositioned {
+                                    val axisX = it.positionInRoot().x
+                                    val icHalfSize = it.size.width / 2
+                                    val icCenter = axisX + icHalfSize
                                     coroutineScope.launch {
                                         if (
-                                            iconCoordination.value == 0f &&
-                                            screens[0] == screen
-                                        ) iconCoordination.animateTo(
-                                            it.positionInRoot().x
-                                        )
+                                            iconCoordinates.value == 0f &&
+                                            topDestinationScreens[0] == screen
+                                        ) iconCoordinates.snapTo(icCenter)
                                     }
-                                    selectedPosition = it.positionInRoot().x
+                                    selectedPosition = icCenter
                                 }
                         )
                     },
                     onClick = {
-
                         navController.navigate(screen.route) {
                             popUpTo(navController.graph.findStartDestination().id) {
                                 saveState = true
@@ -133,5 +122,30 @@ fun TnBottomBar(navController: NavController) {
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun FloatingIndicatorPill(
+    modifier: Modifier = Modifier,
+    indicatorColor: Color,
+    pillSize: Size,
+    axisXCoordinates: Float
+) {
+    Canvas(
+        modifier = modifier
+            .height(pillSize.height.dp)
+            .fillMaxWidth()
+    ) {
+        val pillCenter = pillSize.width / 2
+        drawRoundRect(
+            color = indicatorColor,
+            size = pillSize,
+            topLeft = Offset(x = axisXCoordinates - pillCenter, y = 0f),
+            cornerRadius = CornerRadius(
+                y = (pillSize.width / 2),
+                x = (pillSize.height / 2)
+            )
+        )
     }
 }
