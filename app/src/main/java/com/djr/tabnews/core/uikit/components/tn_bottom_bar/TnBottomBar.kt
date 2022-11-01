@@ -19,24 +19,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.compose.currentBackStackEntryAsState
+import com.djr.tabnews.core.navigation.TopLevelDestination
 import com.djr.tabnews.core.uikit.theme.TabNewsTheme
 import kotlinx.coroutines.launch
 
 @Composable
-fun TnBottomBar(navController: NavController) {
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
+fun TnBottomBar(
+    destinations: List<TopLevelDestination>,
+    currentDestination: NavDestination?,
+    onNavigateToTopLevel: (TopLevelDestination) -> Unit
+) {
     val coroutineScope = rememberCoroutineScope()
-
     val iconCoordinates = remember { Animatable(0f) }
-
-    val topDestinationScreens = listOf(
-        TnBottomScreens.Home,
-        TnBottomScreens.Bookmark
-    )
 
     Column {
         FloatingIndicatorPill(
@@ -55,11 +51,8 @@ fun TnBottomBar(navController: NavController) {
                     )
                 )
         ) {
-            topDestinationScreens.forEach { screen ->
-                val currentDestination = navBackStackEntry?.destination
-                val isSelected = currentDestination?.hierarchy?.any {
-                    screen.verifyRoutes(it.route)
-                } == true
+            destinations.forEach { screen ->
+                val isSelected = currentDestination.isTopLevelDestinationInHierarchy(screen)
 
                 val iconTint = if (isSelected) {
                     TabNewsTheme.colors.highlight
@@ -67,26 +60,16 @@ fun TnBottomBar(navController: NavController) {
                     TabNewsTheme.colors.textNeutral
                 }
 
-                fun itemClick() {
-                    navController.navigate(screen.route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                }
-
                 BottomNavItem(
                     isSelected = isSelected,
                     screen = screen,
                     iconTint = iconTint,
-                    onClick = { itemClick() },
+                    onClick = { onNavigateToTopLevel(screen) },
                     onPositioned = { axis ->
                         coroutineScope.launch {
                             if (
                                 iconCoordinates.value == 0f &&
-                                topDestinationScreens[0] == screen
+                                destinations[0] == screen
                             ) iconCoordinates.snapTo(axis)
                         }
                     },
@@ -135,7 +118,7 @@ private fun FloatingIndicatorPill(
 @Composable
 fun RowScope.BottomNavItem(
     isSelected: Boolean,
-    screen: TnBottomScreens,
+    screen: TopLevelDestination,
     iconTint: Color,
     onClick: () -> Unit,
     onPositioned: (icPosition: Float) -> Unit,
@@ -152,7 +135,7 @@ fun RowScope.BottomNavItem(
         onClick = onClick,
         icon = {
             Icon(
-                imageVector = screen.icon,
+                imageVector = screen.destinationIcon,
                 contentDescription = null,
                 tint = iconTint,
                 modifier = Modifier
@@ -168,3 +151,8 @@ fun RowScope.BottomNavItem(
         }
     )
 }
+
+private fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLevelDestination) =
+    this?.hierarchy?.any {
+        it.route?.contains(destination.name, true) ?: false
+    } ?: false

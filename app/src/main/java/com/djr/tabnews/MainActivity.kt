@@ -4,11 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
-import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.djr.tabnews.core.navigation.RootDestinations
-import com.djr.tabnews.core.navigation.graphs.addBookmarkNavGraph
-import com.djr.tabnews.core.navigation.graphs.addHomeNavGraph
+import com.djr.tabnews.core.navigation.AppNavigation
+import com.djr.tabnews.core.navigation.TnNavHost
 import com.djr.tabnews.core.uikit.components.tn_bottom_bar.TnBottomBar
 
 class MainActivity : ComponentActivity() {
@@ -16,17 +14,18 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
+            val appNavigation = AppNavigation(navController)
 
             Scaffold(
-                bottomBar = { TnBottomBar(navController) }
-            ) {
-                NavHost(
-                    navController = navController,
-                    startDestination = RootDestinations.Main.route
-                ) {
-                    addHomeNavGraph(navController)
-                    addBookmarkNavGraph()
+                bottomBar = {
+                    TnBottomBar(
+                        destinations = appNavigation.destinations,
+                        currentDestination = appNavigation.currentDestination,
+                        onNavigateToTopLevel = appNavigation::onNavigateToTopDestination
+                    )
                 }
+            ) {
+                TnNavHost(navController = navController)
             }
         }
     }

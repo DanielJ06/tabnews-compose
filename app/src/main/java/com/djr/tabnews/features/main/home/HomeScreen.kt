@@ -13,13 +13,25 @@ import androidx.compose.ui.Modifier
 import com.djr.tabnews.core.uikit.theme.TabNewsTheme
 
 @Composable
+fun HomeRoute(
+    navigateToDetails: (postId: String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    HomeScreen(
+        navigateToDetails = navigateToDetails,
+        modifier = modifier
+    )
+}
+
+@Composable
 fun HomeScreen(
-    navigateToDetails: () -> Unit
+    navigateToDetails: (postId: String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(color = TabNewsTheme.colors.primaryBg)
     ) {
@@ -29,7 +41,7 @@ fun HomeScreen(
             text = "HomeScreen $mood",
             color = TabNewsTheme.colors.textNeutral,
             modifier = Modifier.clickable {
-                navigateToDetails()
+                navigateToDetails("temp_id")
             }
         )
     }

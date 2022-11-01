@@ -1,4 +1,4 @@
-package com.djr.tabnews.features.bookmark
+package com.djr.tabnews.features.bookmark.bookmarks
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import com.djr.tabnews.core.uikit.theme.TabNewsTheme
 
 @Composable
-fun BookmarkScreen() {
+fun BookmarksScreen() {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,

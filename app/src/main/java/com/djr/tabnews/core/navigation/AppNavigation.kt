@@ -1,34 +1,38 @@
 package com.djr.tabnews.core.navigation
 
-import androidx.navigation.NamedNavArgument
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.navOptions
+import com.djr.tabnews.features.bookmark.bookmarks.navigation.navigateToBookmarks
+import com.djr.tabnews.features.main.graph.navigateToMainGraph
 
-sealed class RootDestinations(val route: String) {
-    object Main : RootDestinations("main")
-    object Bookmark : RootDestinations("bookmark")
-}
-
-sealed class GraphDestinations(
-    val root: RootDestinations,
-    val route: String,
+class AppNavigation(
+    private val navController: NavController
 ) {
 
-    open val arguments: List<NamedNavArgument> = emptyList()
-    fun createRoute() = "${root.route}/$route"
+    val currentDestination: NavDestination?
+        @Composable get() = navController
+            .currentBackStackEntryAsState().value?.destination
 
-    object BookmarkRoutes {
-        object Bookmarked :
-            GraphDestinations(root = RootDestinations.Bookmark, route = "bookmarked")
-    }
+    val destinations = TopLevelDestination.values().asList()
 
-    object MainRoutes {
-
-        object Main : GraphDestinations(root = RootDestinations.Main, route = "home")
-
-        object ContentDetails : GraphDestinations(
-            root = RootDestinations.Main,
-            route = "content"
-        )
-
+    fun onNavigateToTopDestination(destination: TopLevelDestination) {
+        val topNavOptions = navOptions {
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+        when (destination) {
+            TopLevelDestination.BOOKMARK -> navController.navigateToBookmarks(
+                topNavOptions
+            )
+            TopLevelDestination.MAIN -> navController.navigateToMainGraph(topNavOptions)
+        }
     }
 
 }
