@@ -8,24 +8,33 @@ import androidx.navigation.compose.rememberNavController
 import com.djr.tabnews.core.navigation.AppNavigation
 import com.djr.tabnews.core.navigation.TnNavHost
 import com.djr.tabnews.core.uikit.components.tn_bottom_bar.TnBottomBar
+import com.djr.tabnews.core.uikit.theme.TabNewsTheme
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val navController = rememberNavController()
-            val appNavigation = AppNavigation(navController)
+            TabNewsTheme {
+                val navController = rememberNavController()
+                val systemUi = rememberSystemUiController()
+                val appNavigation = AppNavigation(navController)
 
-            Scaffold(
-                bottomBar = {
-                    TnBottomBar(
-                        destinations = appNavigation.destinations,
-                        currentDestination = appNavigation.currentDestination,
-                        onNavigateToTopLevel = appNavigation::onNavigateToTopDestination
-                    )
+                systemUi.setSystemBarsColor(
+                    TabNewsTheme.colors.primaryBg
+                )
+
+                Scaffold(
+                    bottomBar = {
+                        TnBottomBar(
+                            destinations = appNavigation.destinations,
+                            currentDestination = appNavigation.currentDestination,
+                            onNavigateToTopLevel = appNavigation::onNavigateToTopDestination
+                        )
+                    }
+                ) {
+                    TnNavHost(navController = navController)
                 }
-            ) {
-                TnNavHost(navController = navController)
             }
         }
     }
