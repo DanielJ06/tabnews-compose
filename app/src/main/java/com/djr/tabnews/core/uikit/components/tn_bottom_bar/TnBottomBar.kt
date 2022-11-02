@@ -36,8 +36,8 @@ fun TnBottomBar(
 
     Column {
         FloatingIndicatorPill(
-            indicatorColor = TabNewsTheme.colors.highlight,
-            pillSize = Size(width = 150f, height = 8.dp.value),
+            indicatorColor = TabNewsTheme.colors.accentPrimary,
+            pillSize = Size(width = 100f, height = 10.dp.value),
             axisXCoordinates = iconCoordinates.value
         )
         BottomNavigation(
@@ -55,9 +55,9 @@ fun TnBottomBar(
                 val isSelected = currentDestination.isTopLevelDestinationInHierarchy(screen)
 
                 val iconTint = if (isSelected) {
-                    TabNewsTheme.colors.highlight
+                    TabNewsTheme.colors.accentPrimary
                 } else {
-                    TabNewsTheme.colors.textNeutral
+                    TabNewsTheme.colors.textNeutral.copy(alpha = 0.5f)
                 }
 
                 BottomNavItem(

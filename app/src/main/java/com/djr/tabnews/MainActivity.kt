@@ -18,39 +18,48 @@ import androidx.navigation.compose.rememberNavController
 import com.djr.tabnews.core.navigation.AppNavigation
 import com.djr.tabnews.core.navigation.TnNavHost
 import com.djr.tabnews.core.uikit.components.tn_bottom_bar.TnBottomBar
+import com.djr.tabnews.core.uikit.theme.TabNewsTheme
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val navController = rememberNavController()
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
-            val appNavigation = AppNavigation(navController)
-            var bottomBarVisible by rememberSaveable { mutableStateOf(true) }
+            TabNewsTheme {
+                val navController = rememberNavController()
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val systemUi = rememberSystemUiController()
+                val appNavigation = AppNavigation(navController)
+                var bottomBarVisible by rememberSaveable { mutableStateOf(true) }
 
-            LaunchedEffect(navBackStackEntry?.destination?.route) {
-                navBackStackEntry?.destination?.route?.let {
-                    bottomBarVisible = appNavigation.canShowBottomBar(it)
-                }
-            }
-
-            Scaffold(
-                bottomBar = {
-                    AnimatedVisibility(
-                        visible = bottomBarVisible,
-                        enter = slideInVertically(initialOffsetY = { it }),
-                        exit = slideOutVertically(targetOffsetY = { it })
-                    ) {
-                        TnBottomBar(
-                            destinations = appNavigation.destinations,
-                            currentDestination = appNavigation.currentDestination,
-                            onNavigateToTopLevel = appNavigation::onNavigateToTopDestination
-                        )
+                LaunchedEffect(navBackStackEntry?.destination?.route) {
+                    navBackStackEntry?.destination?.route?.let {
+                        bottomBarVisible = appNavigation.canShowBottomBar(it)
                     }
                 }
-            ) {
-                TnNavHost(navController = navController)
+
+                systemUi.setSystemBarsColor(
+                    TabNewsTheme.colors.primaryBg
+                )
+
+                Scaffold(
+                    bottomBar = {
+                        AnimatedVisibility(
+                            visible = bottomBarVisible,
+                            enter = slideInVertically(initialOffsetY = { it }),
+                            exit = slideOutVertically(targetOffsetY = { it })
+                        ) {
+                            TnBottomBar(
+                                destinations = appNavigation.destinations,
+                                currentDestination = appNavigation.currentDestination,
+                                onNavigateToTopLevel = appNavigation::onNavigateToTopDestination
+                            )
+                        }
+                    }
+                ) {
+                    TnNavHost(navController = navController)
+                }
             }
         }
     }
