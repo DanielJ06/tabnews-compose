@@ -6,10 +6,14 @@ import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import com.djr.tabnews.features.main.home.navigation.addHomeScreen
 import com.djr.tabnews.features.main.home.navigation.homeRoute
-import com.djr.tabnews.features.main.postDetails.navigation.addProfileDetailsScreen
-import com.djr.tabnews.features.main.postDetails.navigation.navigateToProfileDetails
+import com.djr.tabnews.features.main.postDetails.navigation.addPostDetailsScreen
+import com.djr.tabnews.features.main.postDetails.navigation.navigateToPostDetails
+import com.djr.tabnews.features.main.postDetails.navigation.postDetailRoutePattern
 
 const val mainGraphRoute = "main_graph"
+val hideBottomNavIn = listOf(
+    postDetailRoutePattern
+)
 
 fun NavController.navigateToMainGraph(navOptions: NavOptions? = null) {
     this.navigate(mainGraphRoute, navOptions)
@@ -22,7 +26,7 @@ fun NavGraphBuilder.addMainGraph(
         route = mainGraphRoute,
         startDestination = homeRoute
     ) {
-        addHomeScreen { postId -> navController.navigateToProfileDetails(postId) }
-        addProfileDetailsScreen()
+        addHomeScreen { postId -> navController.navigateToPostDetails(postId) }
+        addPostDetailsScreen()
     }
 }

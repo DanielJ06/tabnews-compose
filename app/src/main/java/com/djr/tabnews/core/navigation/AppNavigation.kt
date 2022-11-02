@@ -7,6 +7,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navOptions
 import com.djr.tabnews.features.bookmark.bookmarks.navigation.navigateToBookmarks
+import com.djr.tabnews.features.main.graph.hideBottomNavIn
 import com.djr.tabnews.features.main.graph.navigateToMainGraph
 
 class AppNavigation(
@@ -18,6 +19,14 @@ class AppNavigation(
             .currentBackStackEntryAsState().value?.destination
 
     val destinations = TopLevelDestination.values().asList()
+
+    private val routesWithoutBottomNav = listOf(
+        hideBottomNavIn
+    ).flatten()
+
+    fun canShowBottomBar(route: String): Boolean {
+        return routesWithoutBottomNav.any { it.contains(route, true) }.not()
+    }
 
     fun onNavigateToTopDestination(destination: TopLevelDestination) {
         val topNavOptions = navOptions {

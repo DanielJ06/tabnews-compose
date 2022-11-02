@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.djr.tabnews.features.main.postDetails.PostDetailsScreen
 
+const val postDetailRoutePattern = "post_detail_route/{postId}"
 const val postDetailRoute = "post_detail_route"
 const val postDetailIdArgs = "postId"
 
@@ -18,12 +19,12 @@ internal class PostDetailsArgs(val postId: String) {
     )
 }
 
-fun NavController.navigateToProfileDetails(postId: String) {
+fun NavController.navigateToPostDetails(postId: String) {
     val encodedId = Uri.encode(postId)
     this.navigate("$postDetailRoute/$encodedId")
 }
 
-fun NavGraphBuilder.addProfileDetailsScreen() {
+fun NavGraphBuilder.addPostDetailsScreen() {
     composable(
         route = "$postDetailRoute/{$postDetailIdArgs}",
         arguments = listOf(navArgument(postDetailIdArgs) { type = NavType.StringType })
