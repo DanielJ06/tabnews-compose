@@ -4,14 +4,13 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -34,22 +33,12 @@ fun TnBottomBar(
     val coroutineScope = rememberCoroutineScope()
     val iconCoordinates = remember { Animatable(0f) }
 
-    Column {
-        FloatingIndicatorPill(
-            indicatorColor = TabNewsTheme.colors.accentPrimary,
-            pillSize = Size(width = 100f, height = 10.dp.value),
-            axisXCoordinates = iconCoordinates.value
-        )
+    Box(
+        modifier = Modifier
+            .background(TabNewsTheme.colors.secondaryBg)
+    ) {
         BottomNavigation(
             backgroundColor = TabNewsTheme.colors.secondaryBg,
-            contentColor = TabNewsTheme.colors.borderLight,
-            modifier = Modifier
-                .clip(
-                    RoundedCornerShape(
-                        topStart = TabNewsTheme.spacing.Xxxs,
-                        topEnd = TabNewsTheme.spacing.Xxxs
-                    )
-                )
         ) {
             destinations.forEach { screen ->
                 val isSelected = currentDestination.isTopLevelDestinationInHierarchy(screen)
@@ -87,6 +76,11 @@ fun TnBottomBar(
                 )
             }
         }
+        FloatingIndicatorPill(
+            indicatorColor = TabNewsTheme.colors.accentPrimary,
+            pillSize = Size(width = 100f, height = 10.dp.value),
+            axisXCoordinates = iconCoordinates.value
+        )
     }
 }
 

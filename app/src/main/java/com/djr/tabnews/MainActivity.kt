@@ -6,12 +6,17 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.consumedWindowInsets
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.djr.tabnews.core.navigation.AppNavigation
@@ -23,6 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalLayoutApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -58,7 +64,12 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 ) {
-                    TnNavHost(navController = navController)
+                    TnNavHost(
+                        navController = navController,
+                        modifier = Modifier
+                            .padding(if (bottomBarVisible) it else PaddingValues())
+                            .consumedWindowInsets(if (bottomBarVisible) it else PaddingValues())
+                    )
                 }
             }
         }
