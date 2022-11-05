@@ -2,14 +2,12 @@ package com.djr.tabnews.core.uikit.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.ReadOnlyComposable
-import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.*
 import com.djr.tabnews.core.uikit.theme.tokens.*
 
 val LocalColors = compositionLocalOf { PURPLE_THEME }
 val LocalSpacing = compositionLocalOf { TabNewsSpacing() }
+val LocalTypography = compositionLocalOf { TabNewsTypography() }
 
 @Composable
 fun TabNewsTheme(
@@ -22,7 +20,7 @@ fun TabNewsTheme(
         .shuffled()
         .first()
 
-    val selectedTheme = when(randomScheme) {
+    val selectedTheme = when (randomScheme) {
         HighlightSchemes.PURPLE_SCHEME -> PURPLE_THEME
         HighlightSchemes.CYAN_SCHEME -> CYAN_THEME
         HighlightSchemes.PINK_SCHEME -> PINK_THEME
@@ -31,7 +29,8 @@ fun TabNewsTheme(
 
     CompositionLocalProvider(
         LocalColors provides selectedTheme,
-        LocalSpacing provides TabNewsSpacing()
+        LocalSpacing provides TabNewsSpacing(),
+        LocalTypography provides TabNewsTypography()
     ) {
         MaterialTheme(
             content = appContent
@@ -48,4 +47,8 @@ object TabNewsTheme {
         @Composable
         @ReadOnlyComposable
         get() = LocalSpacing.current
+    val typography: TabNewsTypography
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalTypography.current
 }
