@@ -17,9 +17,10 @@ data class TabNewsColors(
     val textDarker: Color = Color(0xFF24292E),
     val textDark: Color = Color(0xFF586069),
     val textNeutral: Color = Color(0xFF6A737D),
+    val textNeutralLight: Color = Color(0xFFD1D5DA),
     val textLight: Color = Color(0xFFFFFFFF),
 
-    val tabMoney: Color = Color(0xFF0366D6),
+    val tabMoney: Color = Color(0xFF2188FF),
     val tabCash: Color = Color(0xFF34D058),
 )
 
