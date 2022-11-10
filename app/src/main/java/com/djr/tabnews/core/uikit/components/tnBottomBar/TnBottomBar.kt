@@ -1,4 +1,4 @@
-package com.djr.tabnews.core.uikit.components.tn_bottom_bar
+package com.djr.tabnews.core.uikit.components.tnBottomBar
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.CubicBezierEasing
