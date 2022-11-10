@@ -21,7 +21,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.djr.tabnews.core.navigation.AppNavigation
 import com.djr.tabnews.core.navigation.TnNavHost
-import com.djr.tabnews.core.uikit.components.tn_bottom_bar.TnBottomBar
+import com.djr.tabnews.core.uikit.components.tnBottomBar.TnBottomBar
 import com.djr.tabnews.core.uikit.theme.TabNewsTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
