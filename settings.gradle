@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Tabnews"
 include ':app'
-include ':data'
+include ':core'
+include ':core:data'

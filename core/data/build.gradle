@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.djr.tabnews.data'
+    namespace 'com.djr.tabnews.core.data'
     compileSdk 32
 
     defaultConfig {
