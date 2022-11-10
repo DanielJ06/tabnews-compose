@@ -12,5 +12,8 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
 rootProject.name = "Tabnews"
 include ':app'
+include ':core'
+include ':core:data'
