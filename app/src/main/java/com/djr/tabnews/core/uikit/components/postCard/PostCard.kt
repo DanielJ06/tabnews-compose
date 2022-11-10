@@ -1,7 +1,9 @@
 package com.djr.tabnews.core.uikit.components.postCard
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,6 +19,7 @@ import com.djr.tabnews.core.uikit.theme.TabNewsTheme
 import com.djr.tabnews.core.uikit.theme.extensions.nanoCorners
 import com.djr.tabnews.core.uikit.theme.extensions.quarkCorners
 import com.djr.tabnews.domain.models.PostModel
+import com.djr.tabnews.domain.models.dummies.DUMMY_POST
 
 @Composable
 fun PostCard(
@@ -28,6 +31,11 @@ fun PostCard(
             .fillMaxWidth()
             .nanoCorners()
             .background(TabNewsTheme.colors.secondaryBg)
+            .border(
+                width = 1.dp,
+                color = TabNewsTheme.colors.borderDark,
+                shape = RoundedCornerShape(TabNewsTheme.spacing.Nano)
+            )
             .padding(TabNewsTheme.spacing.Xxxs)
             .height(75.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -35,7 +43,7 @@ fun PostCard(
         Column(
             modifier = Modifier
                 .quarkCorners()
-                .background(TabNewsTheme.colors.tabMoney.copy(alpha = 0.2f))
+                .background(TabNewsTheme.colors.accentPrimary.copy(alpha = 0.2f))
                 .padding(
                     horizontal = TabNewsTheme.spacing.Nano,
                     vertical = TabNewsTheme.spacing.Quark
@@ -43,9 +51,9 @@ fun PostCard(
         ) {
             Text(
                 text = postItem.tabcoins.toString(),
-                color = TabNewsTheme.colors.tabMoney,
+                color = TabNewsTheme.colors.accentPrimary,
                 fontWeight = FontWeight.Bold,
-                style = TabNewsTheme.typography.TextNormalSB
+                style = TabNewsTheme.typography.TextSmallSB
             )
         }
         Spacer(modifier = Modifier.width(TabNewsTheme.spacing.Xxxs))
@@ -61,7 +69,7 @@ fun PostCard(
             )
             Spacer(modifier = Modifier.height(TabNewsTheme.spacing.Quark))
             Text(
-                text = "${postItem.ownerUsername.toCapitalized()} - ${postItem.commentsAmount} comments",
+                text = "${postItem.ownerUsername} - ${postItem.commentsAmount} comments",
                 color = TabNewsTheme.colors.textNeutral,
                 fontWeight = FontWeight.SemiBold,
                 style = TabNewsTheme.typography.TextSmall,
@@ -81,14 +89,5 @@ fun PostCard(
 @Preview
 @Composable
 fun PostCardPreview() {
-    val dummyPost = PostModel(
-        id = "54ba5af4-0ac6-4880-9f94-c635af938276",
-        ownerId = "54ba5af4-0ac6-4880-9f94-c635af938276",
-        title = "Quais foram os maiores obstáculos que vocês já passaram como programadores(as)?",
-        publishedAt = "2022-10-28T22:23:02.042Z",
-        ownerUsername = "danielj06",
-        tabcoins = 3,
-        commentsAmount = 32
-    )
-    PostCard(postItem = dummyPost)
+    PostCard(postItem = DUMMY_POST)
 }
