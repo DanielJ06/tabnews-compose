@@ -28,6 +28,8 @@ include(":core")
 include(":core:data")
 include(":core:domain")
 include(":core:models")
+include(":core:commons")
+include(":core:uikit")
 
 enableFeaturePreview("VERSION_CATALOGS")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

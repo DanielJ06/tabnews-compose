@@ -1,7 +1,7 @@
 package com.djr.tabnews.data
 
 import com.djr.tabnews.data.network.dtos.post.PostResponse
-import com.djr.tabnews.posts.PostModel
+import com.djr.tabnews.core.models.posts.PostModel
 
 fun PostResponse.toModel() = PostModel(
     id = id,

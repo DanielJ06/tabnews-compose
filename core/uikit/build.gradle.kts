@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.djr.tabnews.core.models"
+    namespace = "com.djr.tabnews.core.uikit"
     compileSdk = 33
 
     defaultConfig {
@@ -21,10 +21,21 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.compose.version.get()
+    }
 }
 
 dependencies {
+    implementation(project(":core:models"))
+    implementation(project(":core:commons"))
+
     implementation(libs.androidx.core)
+    implementation(libs.bundles.compose)
+
     implementation(libs.navigation.compose)
-    implementation(libs.android.compose.material)
+    implementation(libs.lifecycle.runtime)
 }

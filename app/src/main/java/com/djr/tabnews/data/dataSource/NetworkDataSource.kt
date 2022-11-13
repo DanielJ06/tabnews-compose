@@ -1,6 +1,6 @@
 package com.djr.tabnews.data.dataSource
 
-import com.djr.tabnews.posts.PostModel
+import com.djr.tabnews.core.models.posts.PostModel
 import kotlinx.coroutines.flow.Flow
 
 interface NetworkDataSource {

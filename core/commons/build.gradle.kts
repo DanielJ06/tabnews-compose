@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.djr.tabnews.core.models"
+    namespace = "com.djr.tabnews.core.commons"
     compileSdk = 33
 
     defaultConfig {
@@ -25,6 +25,4 @@ android {
 
 dependencies {
     implementation(libs.androidx.core)
-    implementation(libs.navigation.compose)
-    implementation(libs.android.compose.material)
 }

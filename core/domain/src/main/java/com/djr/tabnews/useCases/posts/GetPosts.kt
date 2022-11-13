@@ -1,7 +1,7 @@
 package com.djr.tabnews.useCases.posts
 
 import com.djr.tabnews.Resource
-import com.djr.tabnews.posts.PostModel
+import com.djr.tabnews.core.models.posts.PostModel
 import com.djr.tabnews.repository.PostsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

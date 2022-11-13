@@ -18,8 +18,8 @@ import com.djr.tabnews.core.extensions.toCapitalized
 import com.djr.tabnews.core.uikit.theme.TabNewsTheme
 import com.djr.tabnews.core.uikit.theme.extensions.nanoCorners
 import com.djr.tabnews.core.uikit.theme.extensions.quarkCorners
-import com.djr.tabnews.posts.PostModel
-import com.djr.tabnews.dummies.DUMMY_POST
+import com.djr.tabnews.core.models.posts.PostModel
+import com.djr.tabnews.core.models.dummies.DUMMY_POST
 
 @Composable
 fun PostCard(

@@ -1,4 +1,4 @@
-package com.djr.tabnews.core.navigation
+package com.djr.tabnews.core.models
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite

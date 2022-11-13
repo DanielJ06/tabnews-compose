@@ -1,4 +1,4 @@
-package com.djr.tabnews.core.navigation
+package com.djr.tabnews.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

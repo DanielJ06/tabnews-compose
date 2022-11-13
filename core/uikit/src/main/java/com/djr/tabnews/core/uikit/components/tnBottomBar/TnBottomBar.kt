@@ -20,7 +20,7 @@ import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
-import com.djr.tabnews.core.navigation.TopLevelDestination
+import com.djr.tabnews.core.models.TopLevelDestination
 import com.djr.tabnews.core.uikit.theme.TabNewsTheme
 import kotlinx.coroutines.launch
 

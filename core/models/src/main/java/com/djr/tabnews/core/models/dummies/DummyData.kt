@@ -1,6 +1,6 @@
-package com.djr.tabnews.dummies
+package com.djr.tabnews.core.models.dummies
 
-import com.djr.tabnews.posts.PostModel
+import com.djr.tabnews.core.models.posts.PostModel
 
 val DUMMY_POST = PostModel(
     id = "54ba5af4-0ac6-4880-9f94-c635af938276",
