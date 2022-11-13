@@ -25,8 +25,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.djr.tabnews.core.uikit.components.postCard.PostCard
 import com.djr.tabnews.core.uikit.components.tnScaffold.TnScaffold
 import com.djr.tabnews.core.uikit.theme.TabNewsTheme
-import com.djr.tabnews.domain.models.PostModel
-import com.djr.tabnews.domain.models.dummies.DUMMY_POSTS
+import com.djr.tabnews.posts.PostModel
+import com.djr.tabnews.dummies.DUMMY_POSTS
 import kotlinx.coroutines.delay
 
 @Composable

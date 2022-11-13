@@ -1,6 +1,6 @@
 package com.djr.tabnews.data.repository
 
-import com.djr.tabnews.domain.repository.PostsRepository
+import com.djr.tabnews.repository.PostsRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

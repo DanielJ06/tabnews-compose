@@ -2,12 +2,10 @@
 plugins {
     alias(libs.plugins.android.lib)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kapt)
-    alias(libs.plugins.hilt.android.plugin)
 }
 
 android {
-    namespace = "com.djr.tabnews.core.domain"
+    namespace = "com.djr.tabnews.core.models"
     compileSdk = 33
 
     defaultConfig {
@@ -26,14 +24,5 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:models"))
-
     implementation(libs.androidx.core)
-    implementation(libs.android.coroutines)
-
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
-    kapt(libs.google.hilt.compiler)
-    implementation(libs.hilt.work)
-    implementation(libs.hilt.navigation)
 }

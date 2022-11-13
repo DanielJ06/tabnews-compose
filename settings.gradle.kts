@@ -26,6 +26,8 @@ rootProject.name = "Tabnews"
 include(":app")
 include(":core")
 include(":core:data")
+include(":core:domain")
+include(":core:models")
 
 enableFeaturePreview("VERSION_CATALOGS")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
