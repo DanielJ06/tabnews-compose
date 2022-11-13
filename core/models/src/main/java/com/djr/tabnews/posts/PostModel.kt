@@ -1,4 +1,4 @@
-package com.djr.tabnews.domain.models
+package com.djr.tabnews.posts
 
 data class PostModel(
     val id: String,

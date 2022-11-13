@@ -1,6 +1,6 @@
 package com.djr.tabnews.features.main.home
 
-import com.djr.tabnews.domain.models.PostModel
+import com.djr.tabnews.posts.PostModel
 
 data class HomeState(
     val isLoading: Boolean = false,

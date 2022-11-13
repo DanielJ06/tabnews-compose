@@ -3,7 +3,7 @@ package com.djr.tabnews.data.network.dataSource
 import com.djr.tabnews.data.dataSource.NetworkDataSource
 import com.djr.tabnews.data.network.TabNewsService
 import com.djr.tabnews.data.toModel
-import com.djr.tabnews.domain.models.PostModel
+import com.djr.tabnews.posts.PostModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

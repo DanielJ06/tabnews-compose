@@ -1,6 +1,6 @@
-package com.djr.tabnews.domain.repository
+package com.djr.tabnews.repository
 
-import com.djr.tabnews.domain.models.PostModel
+import com.djr.tabnews.posts.PostModel
 import kotlinx.coroutines.flow.Flow
 
 interface PostsRepository {
