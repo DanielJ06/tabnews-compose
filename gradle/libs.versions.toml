@@ -77,6 +77,7 @@ network = [
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradle-plugins-version" }
+android-lib = { id = "com.android.library", version.ref = "gradle-plugins-version" }
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin-version" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-version" }
 hilt-android-plugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt-android-version" }
