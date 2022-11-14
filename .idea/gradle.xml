@@ -17,6 +17,8 @@
             <option value="$PROJECT_DIR$/core/domain" />
             <option value="$PROJECT_DIR$/core/models" />
             <option value="$PROJECT_DIR$/core/uikit" />
+            <option value="$PROJECT_DIR$/features" />
+            <option value="$PROJECT_DIR$/features/main" />
           </set>
         </option>
       </GradleProjectSettings>

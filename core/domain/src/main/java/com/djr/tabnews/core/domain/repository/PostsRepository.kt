@@ -1,4 +1,4 @@
-package com.djr.tabnews.repository
+package com.djr.tabnews.core.domain.repository
 
 import com.djr.tabnews.core.models.posts.PostModel
 import kotlinx.coroutines.flow.Flow

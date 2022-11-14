@@ -1,4 +1,4 @@
-package com.djr.tabnews
+package com.djr.tabnews.core.domain
 
 sealed class Resource<T>(val data: T? = null, val message: String? = null) {
     class Success<T>(data: T) : Resource<T>(data)

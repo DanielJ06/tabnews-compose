@@ -2,8 +2,8 @@ package com.djr.tabnews.features.main.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.djr.tabnews.Resource
-import com.djr.tabnews.useCases.posts.GetPostsUseCase
+import com.djr.tabnews.core.domain.Resource
+import com.djr.tabnews.core.domain.useCases.posts.GetPostsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

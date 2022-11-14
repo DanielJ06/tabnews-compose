@@ -30,6 +30,8 @@ include(":core:domain")
 include(":core:models")
 include(":core:commons")
 include(":core:uikit")
+include(":features")
 
 enableFeaturePreview("VERSION_CATALOGS")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+include(":features:main")

@@ -2,7 +2,7 @@ package com.djr.tabnews.data.repository
 
 import com.djr.tabnews.data.dataSource.NetworkDataSource
 import com.djr.tabnews.core.models.posts.PostModel
-import com.djr.tabnews.repository.PostsRepository
+import com.djr.tabnews.core.domain.repository.PostsRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
