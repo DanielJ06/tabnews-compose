@@ -1,4 +1,4 @@
-package com.djr.tabnews.data.network.dtos.post
+package com.djr.tabnews.core.network.dtos.post
 
 import com.google.gson.annotations.SerializedName
 

@@ -27,6 +27,7 @@ android {
 
 dependencies {
     implementation(project(":core:models"))
+    implementation(project(":core:data"))
 
     implementation(libs.androidx.core)
     implementation(libs.android.coroutines)
