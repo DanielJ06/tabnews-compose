@@ -55,7 +55,7 @@ dependencies {
     implementation(project(":core:models"))
     implementation(project(":core:commons"))
     implementation(project(":core:uikit"))
-    implementation(project(":core:domain"))
+    implementation(project(":features:main"))
 
     implementation(libs.androidx.core)
     implementation(libs.bundles.compose)

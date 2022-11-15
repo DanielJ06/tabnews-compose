@@ -1,6 +1,6 @@
-package com.djr.tabnews.data.network.di
+package com.djr.tabnews.core.network.di
 
-import com.djr.tabnews.data.network.TabNewsService
+import com.djr.tabnews.core.network.TabNewsService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

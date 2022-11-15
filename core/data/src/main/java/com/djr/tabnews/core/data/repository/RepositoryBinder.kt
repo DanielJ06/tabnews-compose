@@ -1,6 +1,7 @@
-package com.djr.tabnews.data.repository
+package com.djr.tabnews.core.data.repository
 
-import com.djr.tabnews.core.domain.repository.PostsRepository
+import com.djr.tabnews.core.data.repository.posts.PostsRepository
+import com.djr.tabnews.core.data.repository.posts.PostsRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -8,9 +9,9 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class RepositoryBinder {
+interface RepositoryBinder {
     @Binds
-    abstract fun bindsPostsRepository(
+    fun bindsPostsRepository(
         postsRepositoryImpl: PostsRepositoryImpl
     ): PostsRepository
 }

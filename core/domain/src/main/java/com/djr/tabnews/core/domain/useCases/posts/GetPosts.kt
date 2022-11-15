@@ -1,8 +1,8 @@
 package com.djr.tabnews.core.domain.useCases.posts
 
+import com.djr.tabnews.core.data.repository.posts.PostsRepository
 import com.djr.tabnews.core.domain.Resource
 import com.djr.tabnews.core.models.posts.PostModel
-import com.djr.tabnews.core.domain.repository.PostsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

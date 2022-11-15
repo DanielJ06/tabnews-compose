@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.djr.tabnews.core.data"
+    namespace = "com.djr.tabnews.core.network"
     compileSdk = 33
 
     defaultConfig {
@@ -27,10 +27,11 @@ android {
 
 dependencies {
     implementation(project(":core:models"))
-    implementation(project(":core:network"))
+    implementation(project(":core:commons"))
 
     implementation(libs.androidx.core)
     implementation(libs.android.coroutines)
+    implementation(libs.bundles.network)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)

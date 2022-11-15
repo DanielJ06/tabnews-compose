@@ -1,6 +1,6 @@
-package com.djr.tabnews.data.network
+package com.djr.tabnews.core.network
 
-import com.djr.tabnews.data.network.dtos.post.PostResponse
+import com.djr.tabnews.core.network.dtos.post.PostResponse
 import retrofit2.http.GET
 
 interface TabNewsService {
