@@ -1,4 +1,4 @@
-package com.djr.tabnews.core.data.datasource.network
+package com.djr.tabnews.core.network
 
 import com.djr.tabnews.core.network.dataSource.PostsNetworkDts
 import com.djr.tabnews.core.network.dataSource.PostsNetworkDtsImpl
