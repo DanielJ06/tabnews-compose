@@ -60,6 +60,7 @@ dependencies {
 
     implementation(libs.work.runtime)
     implementation(libs.accompanist)
+    implementation(libs.io.coil)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)

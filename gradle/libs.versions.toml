@@ -20,7 +20,8 @@ activity-compose-version = "1.6.1"
 junit-version = "4.13.2"
 android-junit-version = "1.1.4"
 espresso-core-version = "3.5.0"
-
+coil-version = "2.2.2"
+markwon-version = "4.6.2"
 
 [libraries]
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit-version" }
@@ -35,10 +36,18 @@ google-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref
 hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "hilt-work-version" }
 hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation-version" }
 
+markwon-core = { module = "io.noties.markwon:core", version.ref = "markwon-version" }
+markwon-html = { module = "io.noties.markwon:html", version.ref = "markwon-version" }
+markwon-linkify = { module = "io.noties.markwon:linkify", version.ref = "markwon-version" }
+markwon-tables = { module = "io.noties.markwon:ext-tables", version.ref = "markwon-version" }
+markwon-strike = { module = "io.noties.markwon:ext-strikethrough", version.ref = "markwon-version" }
+markwon-coil = { module = "io.noties.markwon:image-coil", version.ref = "markwon-version" }
+
 accompanist = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist-version" }
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose-version" }
 work-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "work-runtime-version" }
 android-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines-version" }
+io-coil = { module = "io.coil-kt:coil", version.ref = "coil-version" }
 
 android-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose-version" }
 android-compose-material = { module = "androidx.compose.material:material", version.ref = "compose-version" }
@@ -60,6 +69,14 @@ compose = [
     "android-compose-material",
     "compose-ui-tooling",
     "activity-compose"
+]
+markwon = [
+    "markwon-core",
+    "markwon-html",
+    "markwon-linkify",
+    "markwon-tables",
+    "markwon-strike",
+    "markwon-coil"
 ]
 test = [
     "junit-junit",
