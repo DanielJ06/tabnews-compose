@@ -15,11 +15,12 @@ import androidx.compose.ui.unit.dp
 import com.djr.tabnews.core.extensions.Constants
 import com.djr.tabnews.core.extensions.formatDate
 import com.djr.tabnews.core.extensions.toCapitalized
+import com.djr.tabnews.core.models.dummies.DUMMY_POST
+import com.djr.tabnews.core.models.posts.PostModel
 import com.djr.tabnews.core.uikit.theme.TabNewsTheme
 import com.djr.tabnews.core.uikit.theme.extensions.nanoCorners
+import com.djr.tabnews.core.uikit.theme.extensions.prettyCount
 import com.djr.tabnews.core.uikit.theme.extensions.quarkCorners
-import com.djr.tabnews.core.models.posts.PostModel
-import com.djr.tabnews.core.models.dummies.DUMMY_POST
 
 @Composable
 fun PostCard(
@@ -41,6 +42,7 @@ fun PostCard(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .quarkCorners()
                 .background(TabNewsTheme.colors.accentPrimary.copy(alpha = 0.2f))
@@ -48,12 +50,13 @@ fun PostCard(
                     horizontal = TabNewsTheme.spacing.Nano,
                     vertical = TabNewsTheme.spacing.Quark
                 )
+                .weight(0.20f)
         ) {
             Text(
-                text = postItem.tabcoins.toString(),
+                text = postItem.tabcoins.prettyCount(),
                 color = TabNewsTheme.colors.accentPrimary,
                 fontWeight = FontWeight.Bold,
-                style = TabNewsTheme.typography.TextSmallSB
+                style = TabNewsTheme.typography.TextSmallSB,
             )
         }
         Spacer(modifier = Modifier.width(TabNewsTheme.spacing.Xxxs))

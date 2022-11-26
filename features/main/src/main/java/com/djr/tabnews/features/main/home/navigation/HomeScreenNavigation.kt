@@ -13,7 +13,7 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.addHomeScreen(
-    navigateToDetails: (postId: String) -> Unit
+    navigateToDetails:(owner: String, slug: String) -> Unit
 ) {
     composable(route = homeRoute) {
         HomeRoute(navigateToDetails = navigateToDetails)

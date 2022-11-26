@@ -7,28 +7,37 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.djr.tabnews.features.main.postDetails.PostDetailsScreen
+import com.djr.tabnews.features.main.postDetails.PostDetailsRoute
 
-const val postDetailRoutePattern = "post_detail_route/{postId}"
+const val postDetailRoutePattern = "post_detail_route/{owner}/{slug}"
 const val postDetailRoute = "post_detail_route"
-const val postDetailIdArgs = "postId"
+const val ownerArgName = "owner"
+const val slugArgName = "slug"
 
-internal class PostDetailsArgs(val postId: String) {
+internal class PostDetailsArgs(
+    val owner: String,
+    val slug: String
+) {
     constructor(savedStateHandle: SavedStateHandle) : this(
-        postId = Uri.decode(checkNotNull(savedStateHandle[postDetailIdArgs]))
+        owner = Uri.decode(checkNotNull(savedStateHandle[ownerArgName])),
+        slug = Uri.decode(checkNotNull(savedStateHandle[slugArgName])),
     )
 }
 
-fun NavController.navigateToPostDetails(postId: String) {
-    val encodedId = Uri.encode(postId)
-    this.navigate("$postDetailRoute/$encodedId")
+fun NavController.navigateToPostDetails(owner: String, slug: String) {
+    val encodedOwner = Uri.encode(owner)
+    val encodedSlug = Uri.encode(slug)
+    this.navigate("$postDetailRoute/$encodedOwner/$encodedSlug")
 }
 
 fun NavGraphBuilder.addPostDetailsScreen() {
     composable(
-        route = "$postDetailRoute/{$postDetailIdArgs}",
-        arguments = listOf(navArgument(postDetailIdArgs) { type = NavType.StringType })
+        route = "$postDetailRoute/{$ownerArgName}/{$slugArgName}",
+        arguments = listOf(
+            navArgument(ownerArgName) { type = NavType.StringType },
+            navArgument(slugArgName) { type = NavType.StringType }
+        )
     ) {
-        PostDetailsScreen()
+        PostDetailsRoute()
     }
 }

@@ -7,6 +7,7 @@ import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -22,16 +23,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.djr.tabnews.core.models.dummies.DUMMY_POSTS
+import com.djr.tabnews.core.models.posts.PostModel
 import com.djr.tabnews.core.uikit.components.postCard.PostCard
 import com.djr.tabnews.core.uikit.components.tnScaffold.TnScaffold
 import com.djr.tabnews.core.uikit.theme.TabNewsTheme
-import com.djr.tabnews.core.models.posts.PostModel
-import com.djr.tabnews.core.models.dummies.DUMMY_POSTS
 import kotlinx.coroutines.delay
 
 @Composable
 fun HomeRoute(
-    navigateToDetails: (postId: String) -> Unit,
+    navigateToDetails: (owner: String, slug: String) -> Unit,
     modifier: Modifier = Modifier,
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
@@ -46,7 +47,7 @@ fun HomeRoute(
 
 @Composable
 fun HomeScreen(
-    navigateToDetails: (postId: String) -> Unit,
+    navigateToDetails: (owner: String, slug: String) -> Unit,
     modifier: Modifier = Modifier,
     state: HomeState
 ) {
@@ -62,13 +63,14 @@ fun HomeScreen(
             enter = fadeIn(),
             exit = fadeOut()
         ) {
-            HomeFeed(state.posts)
+            HomeFeed(navigateToDetails, state.posts)
         }
     }
 }
 
 @Composable
 fun HomeFeed(
+    navigateToDetails: (owner: String, slug: String) -> Unit,
     posts: List<PostModel>
 ) {
     var initialized by rememberSaveable { mutableStateOf(false) }
@@ -122,10 +124,12 @@ fun HomeFeed(
             }
             items(posts) { post ->
                 Column(
-                    modifier = Modifier.padding(
-                        vertical = TabNewsTheme.spacing.Nano,
-                        horizontal = TabNewsTheme.spacing.Xxxs
-                    )
+                    modifier = Modifier
+                        .clickable { navigateToDetails(post.ownerUsername, post.slug) }
+                        .padding(
+                            vertical = TabNewsTheme.spacing.Nano,
+                            horizontal = TabNewsTheme.spacing.Xxxs
+                        )
                 ) {
                     PostCard(postItem = post)
                 }
@@ -157,7 +161,7 @@ fun HomeFeed(
 @Composable
 fun HomeScreenPreview() {
     HomeScreen(
-        navigateToDetails = {},
+        navigateToDetails = { _, _ -> },
         state = HomeState(isLoading = true, posts = DUMMY_POSTS)
     )
 }

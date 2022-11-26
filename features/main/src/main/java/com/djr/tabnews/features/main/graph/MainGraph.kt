@@ -26,7 +26,7 @@ fun NavGraphBuilder.addMainGraph(
         route = mainGraphRoute,
         startDestination = homeRoute
     ) {
-        addHomeScreen { postId -> navController.navigateToPostDetails(postId) }
+        addHomeScreen { owner, slug -> navController.navigateToPostDetails(owner, slug) }
         addPostDetailsScreen()
     }
 }
