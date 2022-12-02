@@ -2,7 +2,9 @@ package com.djr.tabnews.core.network.dtos
 
 import com.djr.tabnews.core.models.posts.PostContent
 import com.djr.tabnews.core.models.posts.PostModel
+import com.djr.tabnews.core.models.posts.PostReplies
 import com.djr.tabnews.core.network.dtos.post.PostContentResponse
+import com.djr.tabnews.core.network.dtos.post.PostRepliesResponse
 import com.djr.tabnews.core.network.dtos.post.PostResponse
 
 fun PostResponse.toModel() = PostModel(
@@ -27,3 +29,25 @@ fun PostContentResponse.toModel() = PostContent(
     tabcoins = tabcoins,
     comments = comments
 )
+
+fun PostRepliesResponse.toModel() = PostReplies(
+    id = id,
+    ownerUsername = ownerUsername,
+    body = body,
+    tabcoins = tabcoins,
+    repliesAmount = repliesAmount,
+    replies = replies.toModel()
+)
+
+fun List<PostRepliesResponse>.toModel(): List<PostReplies> {
+    return this.map {
+        PostReplies(
+            id = it.id,
+            ownerUsername = it.ownerUsername,
+            body = it.body,
+            tabcoins = it.tabcoins,
+            repliesAmount = it.repliesAmount,
+            replies = it.replies.toModel()
+        )
+    }
+}

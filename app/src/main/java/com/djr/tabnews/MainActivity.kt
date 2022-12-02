@@ -20,10 +20,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.djr.tabnews.navigation.AppNavigation
-import com.djr.tabnews.navigation.TnNavHost
 import com.djr.tabnews.core.uikit.components.tnBottomBar.TnBottomBar
 import com.djr.tabnews.core.uikit.theme.TabNewsTheme
+import com.djr.tabnews.navigation.AppNavigation
+import com.djr.tabnews.navigation.TnNavHost
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,6 +44,11 @@ class MainActivity : ComponentActivity() {
                     navBackStackEntry?.destination?.route?.let {
                         bottomBarVisible = appNavigation.canShowBottomBar(it)
                     }
+                }
+
+                LaunchedEffect(Unit) {
+                    val intentPaths = intent?.data?.pathSegments?.toList()
+                    appNavigation.handleDeepLinks(intentPaths)
                 }
 
                 systemUi.setSystemBarsColor(

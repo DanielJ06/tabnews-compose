@@ -2,6 +2,7 @@ package com.djr.tabnews.core.models.dummies
 
 import com.djr.tabnews.core.models.posts.PostContent
 import com.djr.tabnews.core.models.posts.PostModel
+import com.djr.tabnews.core.models.posts.PostReplies
 
 val DUMMY_POST = PostModel(
     id = "54ba5af4-0ac6-4880-9f94-c635af938276",
@@ -12,6 +13,15 @@ val DUMMY_POST = PostModel(
     ownerUsername = "danielj06",
     tabcoins = 35000,
     commentsAmount = 32
+)
+
+val DUMMY_POST_REPLY = PostReplies(
+    id = "54ba5af4-0ac6-4880-9f94-c635af938276",
+    ownerUsername = "danielj06",
+    body = "Não sei se você compartilha comigo a visão de que recentemente a **internet deixou de ser um lugar massa**, pelo menos em sites onde a mídia principal é primariamente `texto`. Não sei se você compartilha comigo a visão de que recentemente a **internet deixou de ser um lugar massa**, pelo menos em sites onde a mídia principal é primariamente `texto`.",
+    tabcoins = 350,
+    repliesAmount = 350,
+    replies = emptyList(),
 )
 
 val DUMMY_POST_CONTENT = PostContent(

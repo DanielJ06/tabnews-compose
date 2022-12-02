@@ -43,16 +43,9 @@ fun TnBottomBar(
             destinations.forEach { screen ->
                 val isSelected = currentDestination.isTopLevelDestinationInHierarchy(screen)
 
-                val iconTint = if (isSelected) {
-                    TabNewsTheme.colors.accentPrimary
-                } else {
-                    TabNewsTheme.colors.textNeutral.copy(alpha = 0.5f)
-                }
-
                 BottomNavItem(
                     isSelected = isSelected,
                     screen = screen,
-                    iconTint = iconTint,
                     onClick = { onNavigateToTopLevel(screen) },
                     onPositioned = { axis ->
                         coroutineScope.launch {
@@ -79,7 +72,7 @@ fun TnBottomBar(
         FloatingIndicatorPill(
             indicatorColor = TabNewsTheme.colors.accentPrimary,
             pillSize = Size(width = 100f, height = 10.dp.value),
-            axisXCoordinates = iconCoordinates.value
+            axisProvider = { iconCoordinates.value }
         )
     }
 }
@@ -89,7 +82,7 @@ private fun FloatingIndicatorPill(
     modifier: Modifier = Modifier,
     indicatorColor: Color,
     pillSize: Size,
-    axisXCoordinates: Float
+    axisProvider: () -> Float
 ) {
     Canvas(
         modifier = modifier
@@ -100,7 +93,7 @@ private fun FloatingIndicatorPill(
         drawRoundRect(
             color = indicatorColor,
             size = pillSize,
-            topLeft = Offset(x = axisXCoordinates - pillCenter, y = 0f),
+            topLeft = Offset(x = axisProvider() - pillCenter, y = 0f),
             cornerRadius = CornerRadius(
                 y = (pillSize.width / 2),
                 x = (pillSize.height / 2)
@@ -113,7 +106,6 @@ private fun FloatingIndicatorPill(
 fun RowScope.BottomNavItem(
     isSelected: Boolean,
     screen: TopLevelDestination,
-    iconTint: Color,
     onClick: () -> Unit,
     onPositioned: (icPosition: Float) -> Unit,
     onSelected: (icPosition: Float) -> Unit
@@ -131,7 +123,9 @@ fun RowScope.BottomNavItem(
             Icon(
                 imageVector = screen.destinationIcon,
                 contentDescription = null,
-                tint = iconTint,
+                tint = if (isSelected) TabNewsTheme.colors.accentPrimary else {
+                    TabNewsTheme.colors.textNeutral.copy(alpha = 0.5f)
+                },
                 modifier = Modifier
                     .size(TabNewsTheme.spacing.Xxs)
                     .onGloballyPositioned {

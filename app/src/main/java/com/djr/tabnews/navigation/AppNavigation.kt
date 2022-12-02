@@ -7,9 +7,11 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navOptions
 import com.djr.tabnews.core.models.TopLevelDestination
+import com.djr.tabnews.core.uikit.theme.extensions.isUUID
 import com.djr.tabnews.features.bookmark.bookmarks.navigation.navigateToBookmarks
 import com.djr.tabnews.features.main.graph.hideBottomNavIn
 import com.djr.tabnews.features.main.graph.navigateToMainGraph
+import com.djr.tabnews.features.main.postDetails.navigation.navigateToPostDetails
 
 class AppNavigation(
     private val navController: NavController
@@ -42,6 +44,17 @@ class AppNavigation(
                 topNavOptions
             )
             TopLevelDestination.MAIN -> navController.navigateToMainGraph(topNavOptions)
+        }
+    }
+
+    fun handleDeepLinks(pathSegments: List<String>?) {
+        if (pathSegments?.isNotEmpty() == true) {
+            if (pathSegments[1].isUUID().not()) {
+                navController.navigateToPostDetails(
+                    owner = pathSegments[0],
+                    pathSegments[1]
+                )
+            }
         }
     }
 
