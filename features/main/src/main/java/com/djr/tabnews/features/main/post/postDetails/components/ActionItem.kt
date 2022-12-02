@@ -1,4 +1,4 @@
-package com.djr.tabnews.features.main.postDetails.components
+package com.djr.tabnews.features.main.post.postDetails.components
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.*

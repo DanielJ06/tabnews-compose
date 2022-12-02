@@ -1,4 +1,4 @@
-package com.djr.tabnews.features.main.postDetails
+package com.djr.tabnews.features.main.post.postDetails
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.djr.tabnews.core.domain.Resource
 import com.djr.tabnews.core.domain.useCases.posts.GetPostDetail
 import com.djr.tabnews.core.domain.useCases.posts.GetPostReplies
-import com.djr.tabnews.features.main.postDetails.navigation.PostDetailsArgs
+import com.djr.tabnews.features.main.post.postDetails.navigation.PostDetailsArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

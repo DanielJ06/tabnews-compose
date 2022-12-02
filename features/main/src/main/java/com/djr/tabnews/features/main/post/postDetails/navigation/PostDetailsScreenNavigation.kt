@@ -1,4 +1,4 @@
-package com.djr.tabnews.features.main.postDetails.navigation
+package com.djr.tabnews.features.main.post.postDetails.navigation
 
 import android.net.Uri
 import androidx.lifecycle.SavedStateHandle
@@ -7,7 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.djr.tabnews.features.main.postDetails.PostDetailsRoute
+import com.djr.tabnews.features.main.post.postDetails.PostDetailsRoute
 
 const val postDetailRoutePattern = "post_detail_route/{owner}/{slug}"
 const val postDetailRoute = "post_detail_route"

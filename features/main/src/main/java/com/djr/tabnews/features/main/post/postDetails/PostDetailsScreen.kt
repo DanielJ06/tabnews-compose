@@ -1,4 +1,4 @@
-package com.djr.tabnews.features.main.postDetails
+package com.djr.tabnews.features.main.post.postDetails
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -17,9 +17,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.djr.tabnews.core.uikit.components.markdownWrapper.Markdown
 import com.djr.tabnews.core.uikit.components.tnScaffold.TnScaffold
 import com.djr.tabnews.core.uikit.theme.TabNewsTheme
-import com.djr.tabnews.features.main.postDetails.components.PostActions
-import com.djr.tabnews.features.main.postDetails.components.PostHeader
-import com.djr.tabnews.features.main.postDetails.components.PostReply
+import com.djr.tabnews.features.main.post.postDetails.components.PostActions
+import com.djr.tabnews.features.main.post.postDetails.components.PostHeader
+import com.djr.tabnews.features.main.post.postDetails.components.PostReply
 
 @Composable
 fun PostDetailsRoute(

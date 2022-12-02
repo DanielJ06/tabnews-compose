@@ -6,9 +6,9 @@ import androidx.navigation.NavOptions
 import androidx.navigation.navigation
 import com.djr.tabnews.features.main.home.navigation.addHomeScreen
 import com.djr.tabnews.features.main.home.navigation.homeRoute
-import com.djr.tabnews.features.main.postDetails.navigation.addPostDetailsScreen
-import com.djr.tabnews.features.main.postDetails.navigation.navigateToPostDetails
-import com.djr.tabnews.features.main.postDetails.navigation.postDetailRoutePattern
+import com.djr.tabnews.features.main.post.postDetails.navigation.addPostDetailsScreen
+import com.djr.tabnews.features.main.post.postDetails.navigation.navigateToPostDetails
+import com.djr.tabnews.features.main.post.postDetails.navigation.postDetailRoutePattern
 
 const val mainGraphRoute = "main_graph"
 val hideBottomNavIn = listOf(

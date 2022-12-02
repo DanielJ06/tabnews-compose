@@ -11,7 +11,7 @@ import com.djr.tabnews.core.uikit.theme.extensions.isUUID
 import com.djr.tabnews.features.bookmark.bookmarks.navigation.navigateToBookmarks
 import com.djr.tabnews.features.main.graph.hideBottomNavIn
 import com.djr.tabnews.features.main.graph.navigateToMainGraph
-import com.djr.tabnews.features.main.postDetails.navigation.navigateToPostDetails
+import com.djr.tabnews.features.main.post.postDetails.navigation.navigateToPostDetails
 
 class AppNavigation(
     private val navController: NavController

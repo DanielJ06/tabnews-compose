@@ -1,4 +1,4 @@
-package com.djr.tabnews.features.main.postDetails
+package com.djr.tabnews.features.main.post.postDetails
 
 import com.djr.tabnews.core.models.posts.PostContent
 import com.djr.tabnews.core.models.posts.PostReplies
