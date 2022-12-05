@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.djr.tabnews.core.models.dummies.DUMMY_POST_REPLY
 import com.djr.tabnews.core.models.posts.PostReplies
 import com.djr.tabnews.core.uikit.R
+import com.djr.tabnews.core.uikit.components.markdownWrapper.Markdown
 import com.djr.tabnews.core.uikit.theme.TabNewsTheme
 import com.djr.tabnews.core.uikit.theme.extensions.nanoCorners
 
@@ -35,7 +36,7 @@ fun PostReply(
         Text(
             text = "u/${postReplies.ownerUsername}",
             style = TabNewsTheme.typography.TextNormal,
-            color = TabNewsTheme.colors.accentPrimary.copy(alpha = 0.7f),
+            color = TabNewsTheme.colors.accentPrimary,
             fontWeight = FontWeight.Bold,
         )
         ReplyContent(body = postReplies.body)
@@ -49,8 +50,8 @@ fun ReplyContent(
     body: String
 ) {
     Column {
-        Text(
-            text = body,
+        Markdown(
+            markdown = body,
             style = TabNewsTheme.typography.TextSmall,
             color = TabNewsTheme.colors.textNeutralLight,
         )

@@ -9,11 +9,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.djr.tabnews.core.uikit.components.markdownWrapper.Markdown
 import com.djr.tabnews.core.uikit.components.tnScaffold.TnScaffold
 import com.djr.tabnews.core.uikit.theme.TabNewsTheme
@@ -21,20 +21,20 @@ import com.djr.tabnews.features.main.post.postDetails.components.PostActions
 import com.djr.tabnews.features.main.post.postDetails.components.PostHeader
 import com.djr.tabnews.features.main.post.postDetails.components.PostReply
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun PostDetailsRoute(
     modifier: Modifier = Modifier,
     viewModel: PostDetailsViewModel = hiltViewModel()
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.handleGetPostDetail()
-        viewModel.handleGetPostReplies()
-    }
+    val postDetailsState by viewModel.postDetailState.collectAsStateWithLifecycle()
+    val postRepliesState by viewModel.postRepliesState.collectAsStateWithLifecycle()
 
-    val postDetailsState by viewModel.postDetailState.collectAsState()
-    val postRepliesState by viewModel.postRepliesState.collectAsState()
-
-    PostDetailsScreen(modifier, postDetailsState, postRepliesState)
+    PostDetailsScreen(
+        modifier,
+        postDetailsState,
+        postRepliesState
+    )
 }
 
 @Composable
@@ -43,6 +43,8 @@ fun PostDetailsScreen(
     postDetailsState: PostDetailsState,
     postRepliesState: PostRepliesState
 ) {
+    val scrollState = rememberLazyListState()
+
     TnScaffold(
         modifier = modifier
             .background(color = TabNewsTheme.colors.primaryBg)
@@ -51,17 +53,13 @@ fun PostDetailsScreen(
         isError = postDetailsState.error.isNotEmpty()
     ) {
         AnimatedVisibility(
-            visible = postDetailsState.postDetail != null,
-            enter = fadeIn(),
-            exit = fadeOut()
+            visible = postDetailsState.postDetail != null, enter = fadeIn(), exit = fadeOut()
         ) {
-            val scrollState = rememberLazyListState()
             postDetailsState.postDetail?.let {
                 LazyColumn(
-                    state = scrollState,
-                    modifier = Modifier.fillMaxWidth()
+                    state = scrollState, modifier = Modifier.fillMaxWidth()
                 ) {
-                    item {
+                    item(key = it.id) {
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -82,19 +80,20 @@ fun PostDetailsScreen(
                         }
                         PostActions(postContent = it)
                     }
-                    if (postRepliesState.postReplies.isNotEmpty()) {
-                        itemsIndexed(postRepliesState.postReplies) { index, reply ->
-                            if (index == 0) Spacer(modifier = Modifier.height(TabNewsTheme.spacing.Nano))
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(
-                                        horizontal = TabNewsTheme.spacing.Xxxs,
-                                        vertical = TabNewsTheme.spacing.Nano,
-                                    )
-                            ) {
-                                PostReply(postReplies = reply)
-                            }
+                    itemsIndexed(
+                        items = postRepliesState.postReplies,
+                        key = { _, reply -> reply.id }
+                    ) { index, reply ->
+                        if (index == 0) Spacer(modifier = Modifier.height(TabNewsTheme.spacing.Nano))
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    horizontal = TabNewsTheme.spacing.Xxxs,
+                                    vertical = TabNewsTheme.spacing.Nano,
+                                )
+                        ) {
+                            PostReply(postReplies = reply)
                         }
                     }
                 }

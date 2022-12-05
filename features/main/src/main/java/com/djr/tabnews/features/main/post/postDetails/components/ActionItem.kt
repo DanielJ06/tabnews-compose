@@ -1,6 +1,7 @@
 package com.djr.tabnews.features.main.post.postDetails.components
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -14,12 +15,13 @@ import com.djr.tabnews.core.uikit.theme.TabNewsTheme
 fun ActionItem(
     modifier: Modifier = Modifier,
     info: String,
-    @DrawableRes icon: Int
+    @DrawableRes icon: Int,
+    onActionClick: () -> Unit = {}
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
-        modifier = modifier,
+        modifier = modifier.clickable { onActionClick.invoke() },
     ) {
         Icon(
             modifier = Modifier.size(TabNewsTheme.spacing.Xxxs),

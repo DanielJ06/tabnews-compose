@@ -9,7 +9,9 @@ import com.djr.tabnews.core.domain.useCases.posts.GetPostReplies
 import com.djr.tabnews.features.main.post.postDetails.navigation.PostDetailsArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,16 +21,27 @@ class PostDetailsViewModel @Inject constructor(
     private val getPostDetail: GetPostDetail,
     private val getPostReplies: GetPostReplies
 ) : ViewModel() {
-
-    private val args = PostDetailsArgs(savedStateHandle)
+    private var args = PostDetailsArgs(savedStateHandle)
 
     private val _postDetailState = MutableStateFlow(PostDetailsState())
     val postDetailState: StateFlow<PostDetailsState> = _postDetailState
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = PostDetailsState()
+        )
 
     private val _postRepliesState = MutableStateFlow(PostRepliesState())
     val postRepliesState: StateFlow<PostRepliesState> = _postRepliesState
 
-    fun handleGetPostDetail() {
+    init {
+        viewModelScope.launch {
+            handleGetPostDetail()
+            handleGetPostReplies()
+        }
+    }
+
+    private fun handleGetPostDetail() {
         viewModelScope.launch {
             getPostDetail.invoke(args.owner, args.slug).collect {
                 when (it) {
@@ -48,7 +61,7 @@ class PostDetailsViewModel @Inject constructor(
         }
     }
 
-    fun handleGetPostReplies() {
+    private fun handleGetPostReplies() {
         viewModelScope.launch {
             getPostReplies.invoke(args.owner, args.slug).collect {
                 when (it) {
