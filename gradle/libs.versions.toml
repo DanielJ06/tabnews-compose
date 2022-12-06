@@ -15,13 +15,14 @@ work-runtime-version = "2.7.1"
 coroutines-version = "1.6.4"
 compose-version = "1.3.0"
 android-core-version = "1.9.0"
-lifecycle-runtime-version = "2.5.1"
+lifecycle-runtime-version = "2.6.0-alpha01"
 activity-compose-version = "1.6.1"
 junit-version = "4.13.2"
 android-junit-version = "1.1.4"
 espresso-core-version = "3.5.0"
 coil-version = "2.2.2"
 markwon-version = "4.6.2"
+lottie-version = "5.2.0"
 
 [libraries]
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit-version" }
@@ -49,12 +50,15 @@ work-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "work-
 android-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines-version" }
 io-coil = { module = "io.coil-kt:coil", version.ref = "coil-version" }
 
+lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie-version" }
+
 android-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose-version" }
 android-compose-material = { module = "androidx.compose.material:material", version.ref = "compose-version" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose-version" }
 
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "android-core-version" }
-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-version" }
+lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle-runtime-version" }
+lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle-runtime-version" }
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose-version" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-version" }
 
@@ -68,7 +72,10 @@ compose = [
     "android-compose-ui",
     "android-compose-material",
     "compose-ui-tooling",
-    "activity-compose"
+    "activity-compose",
+    "lottie",
+    "lifecycle-runtime",
+    "lifecycle-viewmodel"
 ]
 markwon = [
     "markwon-core",

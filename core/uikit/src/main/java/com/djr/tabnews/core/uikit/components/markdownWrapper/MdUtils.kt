@@ -2,6 +2,7 @@ package com.djr.tabnews.core.uikit.components.markdownWrapper
 
 import android.content.Context
 import android.graphics.Rect
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
@@ -17,15 +18,19 @@ import coil.ImageLoader
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
 import io.noties.markwon.MarkwonConfiguration
+import io.noties.markwon.MarkwonSpansFactory
 import io.noties.markwon.core.MarkwonTheme
+import io.noties.markwon.core.spans.LinkSpan
 import io.noties.markwon.ext.strikethrough.StrikethroughPlugin
 import io.noties.markwon.ext.tables.TablePlugin
 import io.noties.markwon.html.HtmlPlugin
 import io.noties.markwon.image.AsyncDrawable
+import io.noties.markwon.image.ImageProps
 import io.noties.markwon.image.ImageSize
 import io.noties.markwon.image.ImageSizeResolverDef
 import io.noties.markwon.image.coil.CoilImagesPlugin
 import io.noties.markwon.linkify.LinkifyPlugin
+import org.commonmark.node.Image
 
 internal fun createTextView(
     context: Context,
@@ -79,13 +84,26 @@ internal fun createRender(
         .usePlugin(StrikethroughPlugin.create())
         .usePlugin(TablePlugin.create(context))
         .usePlugin(LinkifyPlugin.create())
+        .usePlugin(CoilImagesPlugin.create(context, coilLoader))
         .usePlugin(object : AbstractMarkwonPlugin() {
             override fun configureConfiguration(builder: MarkwonConfiguration.Builder) {
                 builder.imageSizeResolver(FitWidthIgmResolver())
             }
         })
-        .usePlugin(CoilImagesPlugin.create(context, coilLoader))
         .usePlugin(themePlugin)
+        .usePlugin(object : AbstractMarkwonPlugin() {
+            override fun configureSpansFactory(builder: MarkwonSpansFactory.Builder) {
+                builder.appendFactory(Image::class.java) { config, props ->
+                    LinkSpan(
+                        config.theme(),
+                        ImageProps.DESTINATION.require(props)
+                    ) { _, link ->
+                        Log.i("TESTE", "resolve: $link")
+                        config.linkResolver()
+                    }
+                }
+            }
+        })
         .build()
 }
 
