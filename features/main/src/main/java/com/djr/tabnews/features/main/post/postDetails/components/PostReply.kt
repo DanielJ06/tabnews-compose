@@ -2,6 +2,7 @@ package com.djr.tabnews.features.main.post.postDetails.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -12,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.djr.tabnews.core.models.dummies.DUMMY_POST_REPLY
 import com.djr.tabnews.core.models.posts.PostReplies
+import com.djr.tabnews.core.models.posts.PostThread
 import com.djr.tabnews.core.uikit.R
 import com.djr.tabnews.core.uikit.components.markdownWrapper.Markdown
 import com.djr.tabnews.core.uikit.theme.TabNewsTheme
@@ -21,6 +23,7 @@ import com.djr.tabnews.core.uikit.theme.extensions.nanoCorners
 fun PostReply(
     modifier: Modifier = Modifier,
     postReplies: PostReplies,
+    seeMoreCb: (PostThread) -> Unit = {}
 ) {
     Column(
         modifier = modifier
@@ -41,7 +44,7 @@ fun PostReply(
         )
         ReplyContent(body = postReplies.body)
         Spacer(modifier = Modifier.height(TabNewsTheme.spacing.Nano))
-        ReplyActions(replies = postReplies)
+        ReplyActions(replies = postReplies, seeMoreCb = seeMoreCb)
     }
 }
 
@@ -61,7 +64,9 @@ fun ReplyContent(
 @Composable
 fun ReplyActions(
     modifier: Modifier = Modifier,
-    replies: PostReplies
+    replies: PostReplies,
+    seeMore: Boolean = true,
+    seeMoreCb: (PostThread) -> Unit = {}
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -76,13 +81,18 @@ fun ReplyActions(
         }
         ActionItem(info = "Responder", icon = R.drawable.reply)
     }
-    if (replies.repliesAmount > 0) {
+    if (replies.repliesAmount > 0 && seeMore) {
         Spacer(modifier = Modifier.height(TabNewsTheme.spacing.Nano))
         Text(
             text = "Ver ${replies.repliesAmount} respostas",
             color = TabNewsTheme.colors.accentPrimary,
             fontWeight = FontWeight.Bold,
             style = TabNewsTheme.typography.TextSmallSB,
+            modifier = Modifier.clickable {
+                seeMoreCb.invoke(
+                    PostThread(topReply = replies, children = replies.replies)
+                )
+            }
         )
     }
 }

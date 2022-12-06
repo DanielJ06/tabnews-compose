@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.djr.tabnews.core.models.posts.PostThread
 import com.djr.tabnews.core.uikit.components.markdownWrapper.Markdown
 import com.djr.tabnews.core.uikit.components.tnScaffold.TnScaffold
 import com.djr.tabnews.core.uikit.theme.TabNewsTheme
@@ -25,7 +26,8 @@ import com.djr.tabnews.features.main.post.postDetails.components.PostReply
 @Composable
 fun PostDetailsRoute(
     modifier: Modifier = Modifier,
-    viewModel: PostDetailsViewModel = hiltViewModel()
+    viewModel: PostDetailsViewModel = hiltViewModel(),
+    navigateToReplyChildren: (PostThread) -> Unit
 ) {
     val postDetailsState by viewModel.postDetailState.collectAsStateWithLifecycle()
     val postRepliesState by viewModel.postRepliesState.collectAsStateWithLifecycle()
@@ -33,7 +35,8 @@ fun PostDetailsRoute(
     PostDetailsScreen(
         modifier,
         postDetailsState,
-        postRepliesState
+        postRepliesState,
+        navigateToReplyChildren
     )
 }
 
@@ -41,7 +44,8 @@ fun PostDetailsRoute(
 fun PostDetailsScreen(
     modifier: Modifier,
     postDetailsState: PostDetailsState,
-    postRepliesState: PostRepliesState
+    postRepliesState: PostRepliesState,
+    navigateToReplyChildren: (PostThread) -> Unit
 ) {
     val scrollState = rememberLazyListState()
 
@@ -93,7 +97,9 @@ fun PostDetailsScreen(
                                     vertical = TabNewsTheme.spacing.Nano,
                                 )
                         ) {
-                            PostReply(postReplies = reply)
+                            PostReply(postReplies = reply, seeMoreCb = {
+                                navigateToReplyChildren(it)
+                            })
                         }
                     }
                 }

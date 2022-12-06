@@ -7,6 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.djr.tabnews.core.models.posts.PostThread
 import com.djr.tabnews.features.main.post.postDetails.PostDetailsRoute
 
 const val postDetailRoutePattern = "post_detail_route/{owner}/{slug}"
@@ -30,7 +31,9 @@ fun NavController.navigateToPostDetails(owner: String, slug: String) {
     this.navigate("$postDetailRoute/$encodedOwner/$encodedSlug")
 }
 
-fun NavGraphBuilder.addPostDetailsScreen() {
+fun NavGraphBuilder.addPostDetailsScreen(
+    navigateToReplyChildren: (PostThread) -> Unit
+) {
     composable(
         route = "$postDetailRoute/{$ownerArgName}/{$slugArgName}",
         arguments = listOf(
@@ -38,6 +41,6 @@ fun NavGraphBuilder.addPostDetailsScreen() {
             navArgument(slugArgName) { type = NavType.StringType }
         )
     ) {
-        PostDetailsRoute()
+        PostDetailsRoute(navigateToReplyChildren = navigateToReplyChildren)
     }
 }

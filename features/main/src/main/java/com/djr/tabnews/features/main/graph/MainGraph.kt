@@ -9,10 +9,14 @@ import com.djr.tabnews.features.main.home.navigation.homeRoute
 import com.djr.tabnews.features.main.post.postDetails.navigation.addPostDetailsScreen
 import com.djr.tabnews.features.main.post.postDetails.navigation.navigateToPostDetails
 import com.djr.tabnews.features.main.post.postDetails.navigation.postDetailRoutePattern
+import com.djr.tabnews.features.main.post.replyChild.navigation.addReplyChildrenScreen
+import com.djr.tabnews.features.main.post.replyChild.navigation.navigateToReplyChildrenScreen
+import com.djr.tabnews.features.main.post.replyChild.navigation.replyChildrenPattern
 
 const val mainGraphRoute = "main_graph"
 val hideBottomNavIn = listOf(
-    postDetailRoutePattern
+    postDetailRoutePattern,
+    replyChildrenPattern
 )
 
 fun NavController.navigateToMainGraph(navOptions: NavOptions? = null) {
@@ -27,6 +31,7 @@ fun NavGraphBuilder.addMainGraph(
         startDestination = homeRoute
     ) {
         addHomeScreen { owner, slug -> navController.navigateToPostDetails(owner, slug) }
-        addPostDetailsScreen()
+        addPostDetailsScreen { thread -> navController.navigateToReplyChildrenScreen(thread) }
+        addReplyChildrenScreen { thread -> navController.navigateToReplyChildrenScreen(thread) }
     }
 }
