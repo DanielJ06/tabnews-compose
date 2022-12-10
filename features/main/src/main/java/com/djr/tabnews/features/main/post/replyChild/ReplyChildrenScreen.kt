@@ -8,15 +8,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.djr.tabnews.core.models.dummies.DUMMY_THREAD
 import com.djr.tabnews.core.models.posts.PostThread
+import com.djr.tabnews.core.uikit.components.reply.BaseReply
+import com.djr.tabnews.core.uikit.components.reply.ChildReply
+import com.djr.tabnews.core.uikit.components.reply.ReplyActions
+import com.djr.tabnews.core.uikit.components.reply.ReplyActionsBar
 import com.djr.tabnews.core.uikit.theme.TabNewsTheme
-import com.djr.tabnews.features.main.post.replyChild.components.BaseReply
-import com.djr.tabnews.features.main.post.replyChild.components.ChildReply
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -49,11 +50,9 @@ fun ReplyChildrenScreen(
                     ) {
                         BaseReply(postReplies = thread.topReply)
                     }
-                    Box(
-                        Modifier
-                            .fillMaxWidth()
-                            .height(1.dp)
-                            .background(TabNewsTheme.colors.textNeutral)
+                    ReplyActionsBar(
+                        tabcoinsAmount = thread.topReply.tabcoins,
+                        repliesAmount = thread.topReply.replies.size
                     )
                     Spacer(modifier = Modifier.height(TabNewsTheme.spacing.Nano))
                 }
@@ -65,7 +64,10 @@ fun ReplyChildrenScreen(
                 Column(
                     modifier = Modifier.padding(horizontal = TabNewsTheme.spacing.Xxxs)
                 ) {
-                    BaseReply(postReplies = child)
+                    Column {
+                        BaseReply(postReplies = child)
+                        ReplyActions(replies = child, seeMore = false)
+                    }
                     child.replies.forEachIndexed { i, post ->
                         Column(Modifier.padding(horizontal = TabNewsTheme.spacing.Xxs)) {
                             if (i == 0) Spacer(modifier = Modifier.height(TabNewsTheme.spacing.Nano))

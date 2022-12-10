@@ -17,11 +17,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.djr.tabnews.core.models.posts.PostContent
 import com.djr.tabnews.core.models.posts.PostThread
 import com.djr.tabnews.core.uikit.components.markdownWrapper.Markdown
+import com.djr.tabnews.core.uikit.components.reply.BgReply
 import com.djr.tabnews.core.uikit.components.tnScaffold.TnScaffold
 import com.djr.tabnews.core.uikit.theme.TabNewsTheme
 import com.djr.tabnews.features.main.post.postDetails.components.PostActions
 import com.djr.tabnews.features.main.post.postDetails.components.PostHeader
-import com.djr.tabnews.features.main.post.postDetails.components.PostReply
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -108,7 +108,7 @@ fun PostDetailsScreen(
                                     vertical = TabNewsTheme.spacing.Nano,
                                 )
                         ) {
-                            PostReply(postReplies = reply, seeMoreCb = {
+                            BgReply(postReplies = reply, seeMore = true, seeMoreCb = {
                                 navigateToReplyChildren(it)
                             })
                         }

@@ -1,4 +1,4 @@
-package com.djr.tabnews.features.main.post.replyChild.components
+package com.djr.tabnews.core.uikit.components.reply
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -33,7 +33,8 @@ fun ChildReply(
         Column(
             modifier = Modifier.padding(vertical = TabNewsTheme.spacing.Nano)
         ) {
-            BaseReply(postReplies = postReplies, seeMore = seeMore, seeMoreCb = seeMoreCb)
+            BaseReply(postReplies = postReplies)
+            ReplyActions(replies = postReplies, seeMore = seeMore, seeMoreCb = seeMoreCb)
         }
     }
 }
