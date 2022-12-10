@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.djr.tabnews.core.data"
+    namespace = "com.djr.tabnews.core.database"
     compileSdk = 33
 
     defaultConfig {
@@ -27,15 +27,18 @@ android {
 
 dependencies {
     implementation(project(":core:models"))
-    implementation(project(":core:network"))
-    implementation(project(":core:database"))
+    implementation(project(":core:commons"))
 
     implementation(libs.androidx.core)
     implementation(libs.android.coroutines)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
+
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    kapt(libs.room.compiler)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     kapt(libs.google.hilt.compiler)
     implementation(libs.hilt.work)
-    implementation(libs.hilt.navigation)
 }
