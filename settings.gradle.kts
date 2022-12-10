@@ -31,6 +31,7 @@ include(":core:domain")
 include(":core:models")
 include(":core:commons")
 include(":core:network")
+include(":core:database")
 include(":core:uikit")
 include(":features:main")
 

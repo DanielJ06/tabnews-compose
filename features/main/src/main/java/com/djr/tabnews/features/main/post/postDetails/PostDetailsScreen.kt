@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.djr.tabnews.core.models.posts.PostContent
 import com.djr.tabnews.core.models.posts.PostThread
 import com.djr.tabnews.core.uikit.components.markdownWrapper.Markdown
 import com.djr.tabnews.core.uikit.components.tnScaffold.TnScaffold
@@ -31,12 +32,15 @@ fun PostDetailsRoute(
 ) {
     val postDetailsState by viewModel.postDetailState.collectAsStateWithLifecycle()
     val postRepliesState by viewModel.postRepliesState.collectAsStateWithLifecycle()
+    val isSavedState by viewModel.isPostSavedState.collectAsStateWithLifecycle()
 
     PostDetailsScreen(
         modifier,
         postDetailsState,
         postRepliesState,
-        navigateToReplyChildren
+        isSaved = isSavedState,
+        navigateToReplyChildren = navigateToReplyChildren,
+        onSaveClick = viewModel::handleToggleSave
     )
 }
 
@@ -45,7 +49,9 @@ fun PostDetailsScreen(
     modifier: Modifier,
     postDetailsState: PostDetailsState,
     postRepliesState: PostRepliesState,
-    navigateToReplyChildren: (PostThread) -> Unit
+    isSaved: Boolean,
+    navigateToReplyChildren: (PostThread) -> Unit,
+    onSaveClick: (post: PostContent) -> Unit
 ) {
     val scrollState = rememberLazyListState()
 
@@ -72,7 +78,12 @@ fun PostDetailsScreen(
                                     vertical = TabNewsTheme.spacing.Mini,
                                 )
                         ) {
-                            PostHeader(postContent = it)
+                            PostHeader(
+                                postContent = it,
+                                onFollowClick = {},
+                                onSaveClick = onSaveClick,
+                                isSaved = isSaved
+                            )
                             Spacer(modifier = Modifier.height(TabNewsTheme.spacing.Xxs))
                             Markdown(
                                 markdown = it.body,
