@@ -10,21 +10,24 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.djr.tabnews.core.models.dummies.DUMMY_POST_CONTENT
 import com.djr.tabnews.core.models.posts.PostContent
+import com.djr.tabnews.core.uikit.R
 import com.djr.tabnews.core.uikit.theme.TabNewsTheme
 
 @Composable
 fun PostHeader(
     modifier: Modifier = Modifier,
-    postContent: PostContent
+    postContent: PostContent,
+    isSaved: Boolean = false,
+    onFollowClick: (author: String) -> Unit,
+    onSaveClick: (post: PostContent) -> Unit
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
@@ -47,18 +50,11 @@ fun PostHeader(
                     .weight(1f),
                 authorName = postContent.ownerUsername,
                 authorId = postContent.ownerId,
-                handleFollow = { _, _ -> }
-            )
+                handleFollow = { _, _ -> })
             Spacer(modifier = Modifier.width(TabNewsTheme.spacing.Nano))
-            BookmarkPost()
+            BookmarkPost(postContent = postContent, onSaveClick = onSaveClick, isSaved = isSaved)
         }
     }
-}
-
-@Preview
-@Composable
-fun PostHeaderPreview() {
-    PostHeader(postContent = DUMMY_POST_CONTENT)
 }
 
 @Composable
@@ -104,9 +100,15 @@ fun FollowAuthor(
 @Composable
 fun BookmarkPost(
     modifier: Modifier = Modifier,
-    alreadyBookmarked: Boolean = false
+    postContent: PostContent,
+    isSaved: Boolean,
+    onSaveClick: (post: PostContent) -> Unit
 ) {
-    var saved by remember { mutableStateOf(alreadyBookmarked) }
+    var saved by remember { mutableStateOf(isSaved) }
+
+    LaunchedEffect(isSaved) {
+        saved = isSaved
+    }
 
     Button(
         modifier = modifier.height(IntrinsicSize.Min),
@@ -117,15 +119,22 @@ fun BookmarkPost(
             color = TabNewsTheme.colors.borderDark,
         ),
         onClick = {
+            onSaveClick.invoke(postContent)
             saved = !saved
         },
         contentPadding = PaddingValues(vertical = TabNewsTheme.spacing.Nano),
     ) {
         Icon(
-            if (saved) Icons.Filled.Favorite else Icons.Outlined.Favorite,
+            painterResource(if (saved) R.drawable.bookmarked else R.drawable.bookmark),
             null,
             tint = TabNewsTheme.colors.textNeutralLight,
             modifier = Modifier.size(TabNewsTheme.spacing.Xxxs)
         )
     }
+}
+
+@Preview
+@Composable
+fun PostHeaderPreview() {
+    PostHeader(postContent = DUMMY_POST_CONTENT, onFollowClick = {}, onSaveClick = {})
 }

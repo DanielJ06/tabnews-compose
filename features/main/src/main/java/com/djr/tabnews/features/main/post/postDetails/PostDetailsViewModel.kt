@@ -6,6 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.djr.tabnews.core.domain.Resource
 import com.djr.tabnews.core.domain.useCases.posts.GetPostDetail
 import com.djr.tabnews.core.domain.useCases.posts.GetPostReplies
+import com.djr.tabnews.core.domain.useCases.saved.IsPostSaved
+import com.djr.tabnews.core.domain.useCases.saved.ToggleSavePost
+import com.djr.tabnews.core.models.posts.PostContent
+import com.djr.tabnews.core.models.posts.toOffline
 import com.djr.tabnews.features.main.post.postDetails.navigation.PostDetailsArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,20 +23,22 @@ import javax.inject.Inject
 class PostDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getPostDetail: GetPostDetail,
-    private val getPostReplies: GetPostReplies
+    private val getPostReplies: GetPostReplies,
+    private val isPostSaved: IsPostSaved,
+    private val toggleSavePost: ToggleSavePost
 ) : ViewModel() {
     private var args = PostDetailsArgs(savedStateHandle)
 
     private val _postDetailState = MutableStateFlow(PostDetailsState())
-    val postDetailState: StateFlow<PostDetailsState> = _postDetailState
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Eagerly,
-            initialValue = PostDetailsState()
-        )
+    val postDetailState: StateFlow<PostDetailsState> = _postDetailState.stateIn(
+        scope = viewModelScope, started = SharingStarted.Eagerly, initialValue = PostDetailsState()
+    )
 
     private val _postRepliesState = MutableStateFlow(PostRepliesState())
     val postRepliesState: StateFlow<PostRepliesState> = _postRepliesState
+
+    private val _isPostSavedState = MutableStateFlow(false)
+    val isPostSavedState: StateFlow<Boolean> = _isPostSavedState
 
     init {
         viewModelScope.launch {
@@ -41,12 +47,34 @@ class PostDetailsViewModel @Inject constructor(
         }
     }
 
+    fun handleToggleSave(postContent: PostContent) {
+        viewModelScope.launch {
+            toggleSavePost.invoke(postContent.toOffline(), emptyList()).collect {}
+        }
+    }
+
+    private fun handleIsPostSaved(postId: String) {
+        viewModelScope.launch {
+            isPostSaved.invoke(postId).collect {
+                when (it) {
+                    is Resource.Success -> it.data?.let { saved ->
+                        _isPostSavedState.value = saved
+                    }
+                    else -> {}
+                }
+            }
+        }
+    }
+
     private fun handleGetPostDetail() {
         viewModelScope.launch {
             getPostDetail.invoke(args.owner, args.slug).collect {
                 when (it) {
                     is Resource.Success -> {
-                        _postDetailState.value = PostDetailsState(postDetail = it.data)
+                        it.data?.let { content ->
+                            _postDetailState.value = PostDetailsState(postDetail = content)
+                            handleIsPostSaved(content.id)
+                        }
                     }
                     is Resource.Loading -> {
                         _postDetailState.value = PostDetailsState(isLoading = true)
