@@ -1,23 +1,25 @@
 package com.djr.tabnews.core.network.dtos.post
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class PostRepliesResponse(
-    @SerializedName("id")
+    @SerialName("id")
     val id: String,
 
-    @SerializedName("owner_username")
+    @SerialName("owner_username")
     val ownerUsername: String,
 
-    @SerializedName("body")
+    @SerialName("body")
     val body: String,
 
-    @SerializedName("tabcoins")
+    @SerialName("tabcoins")
     val tabcoins: Int,
 
-    @SerializedName("children_deep_count")
+    @SerialName("children_deep_count")
     val repliesAmount: Int,
 
-    @SerializedName("children")
+    @SerialName("children")
     val replies: List<PostRepliesResponse> = emptyList(),
 )
