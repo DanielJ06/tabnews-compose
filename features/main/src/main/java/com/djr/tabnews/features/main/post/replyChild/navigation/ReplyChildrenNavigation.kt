@@ -7,7 +7,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.djr.tabnews.core.models.posts.PostThread
 import com.djr.tabnews.features.main.post.replyChild.ReplyChildrenRoute
-import com.google.gson.Gson
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 const val replyChildrenPattern = "reply_children/{thread}"
 const val replyChildrenRoute = "reply_children"
@@ -17,15 +19,14 @@ internal class ReplyChildrenArgs(
     val thread: PostThread
 ) {
     constructor(savedStateHandle: SavedStateHandle) : this(
-        thread = Gson().fromJson(
-            Uri.decode(checkNotNull(savedStateHandle[threadArgName])),
-            PostThread::class.java
+        thread = Json.decodeFromString<PostThread>(
+            Uri.decode(checkNotNull(savedStateHandle[threadArgName]))
         )
     )
 }
 
 fun NavController.navigateToReplyChildrenScreen(thread: PostThread) {
-    val encodedThread = Uri.encode(Gson().toJson(thread))
+    val encodedThread = Uri.encode(Json.encodeToString(thread))
     this.navigate("$replyChildrenRoute/$encodedThread")
 }
 

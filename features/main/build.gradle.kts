@@ -57,7 +57,7 @@ dependencies {
     implementation(libs.lifecycle.runtime)
     implementation(libs.navigation.compose)
     implementation(libs.android.coroutines)
-    implementation(libs.google.gson)
+    implementation(libs.kotlin.serialization)
 
     implementation(libs.work.runtime)
     implementation(libs.accompanist)

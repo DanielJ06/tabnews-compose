@@ -1,5 +1,8 @@
 package com.djr.tabnews.core.models.posts
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class PostReplies(
     val id: String,
     val ownerUsername: String,
