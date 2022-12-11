@@ -1,4 +1,4 @@
-package com.djr.tabnews.features.main.post.postDetails.components
+package com.djr.tabnews.core.uikit.components.common
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable

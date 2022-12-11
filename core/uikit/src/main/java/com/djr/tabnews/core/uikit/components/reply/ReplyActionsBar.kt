@@ -1,4 +1,4 @@
-package com.djr.tabnews.features.main.post.postDetails.components
+package com.djr.tabnews.core.uikit.components.reply
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -10,16 +10,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.djr.tabnews.core.models.dummies.DUMMY_POST_CONTENT
-import com.djr.tabnews.core.models.posts.PostContent
 import com.djr.tabnews.core.uikit.R
 import com.djr.tabnews.core.uikit.components.common.ActionItem
 import com.djr.tabnews.core.uikit.theme.TabNewsTheme
+import com.djr.tabnews.core.uikit.theme.extensions.prettyCount
 
 @Composable
-fun PostActions(
+fun ReplyActionsBar(
     modifier: Modifier = Modifier,
-    postContent: PostContent
+    tabcoinsAmount: Int,
+    upVoteCb: () -> Unit = {},
+    downVoteCb: () -> Unit = {},
+    repliesAmount: Int,
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceAround,
@@ -32,9 +34,13 @@ fun PostActions(
             )
             .padding(vertical = TabNewsTheme.spacing.Mini)
     ) {
-        ActionItem(info = postContent.tabcoins.toString(), icon = R.drawable.thumbs_up)
-        ActionItem(info = "", icon = R.drawable.thumbs_down)
-        ActionItem(info = postContent.comments.toString(), icon = R.drawable.comment)
+        ActionItem(
+            info = tabcoinsAmount.prettyCount(),
+            icon = R.drawable.thumbs_up,
+            onActionClick = upVoteCb
+        )
+        ActionItem(info = "", icon = R.drawable.thumbs_down, onActionClick = downVoteCb)
+        ActionItem(info = repliesAmount.toString(), icon = R.drawable.comment)
         ActionItem(info = "", icon = R.drawable.share)
     }
 }
@@ -42,5 +48,5 @@ fun PostActions(
 @Preview
 @Composable
 fun PostActionsPreview() {
-    PostActions(postContent = DUMMY_POST_CONTENT)
+    ReplyActionsBar(tabcoinsAmount = 12, repliesAmount = 23)
 }

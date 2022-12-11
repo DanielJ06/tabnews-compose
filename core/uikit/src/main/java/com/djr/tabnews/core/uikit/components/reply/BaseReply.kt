@@ -1,40 +1,27 @@
-package com.djr.tabnews.features.main.post.postDetails.components
+package com.djr.tabnews.core.uikit.components.reply
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.djr.tabnews.core.models.dummies.DUMMY_POST_REPLY
 import com.djr.tabnews.core.models.posts.PostReplies
 import com.djr.tabnews.core.models.posts.PostThread
 import com.djr.tabnews.core.uikit.R
+import com.djr.tabnews.core.uikit.components.common.ActionItem
 import com.djr.tabnews.core.uikit.components.markdownWrapper.Markdown
 import com.djr.tabnews.core.uikit.theme.TabNewsTheme
-import com.djr.tabnews.core.uikit.theme.extensions.nanoCorners
 
 @Composable
-fun PostReply(
+fun BaseReply(
     modifier: Modifier = Modifier,
     postReplies: PostReplies,
-    seeMoreCb: (PostThread) -> Unit = {}
 ) {
     Column(
-        modifier = modifier
-            .nanoCorners()
-            .background(TabNewsTheme.colors.secondaryBg)
-            .border(
-                width = 1.dp,
-                color = TabNewsTheme.colors.borderDark,
-                shape = RoundedCornerShape(TabNewsTheme.spacing.Nano)
-            )
-            .padding(TabNewsTheme.spacing.Mini)
+        modifier = modifier.fillMaxWidth()
     ) {
         Text(
             text = "u/${postReplies.ownerUsername}",
@@ -44,20 +31,6 @@ fun PostReply(
         )
         ReplyContent(body = postReplies.body)
         Spacer(modifier = Modifier.height(TabNewsTheme.spacing.Nano))
-        ReplyActions(replies = postReplies, seeMoreCb = seeMoreCb)
-    }
-}
-
-@Composable
-fun ReplyContent(
-    body: String
-) {
-    Column {
-        Markdown(
-            markdown = body,
-            style = TabNewsTheme.typography.TextSmall,
-            color = TabNewsTheme.colors.textNeutralLight,
-        )
     }
 }
 
@@ -97,8 +70,21 @@ fun ReplyActions(
     }
 }
 
+@Composable
+fun ReplyContent(
+    body: String
+) {
+    Column {
+        Markdown(
+            markdown = body,
+            style = TabNewsTheme.typography.TextSmall,
+            color = TabNewsTheme.colors.textNeutralLight,
+        )
+    }
+}
+
 @Preview
 @Composable
-fun PostReplyPreview() {
-    PostReply(postReplies = DUMMY_POST_REPLY)
+fun BaseReplyPreview() {
+    BaseReply(postReplies = DUMMY_POST_REPLY)
 }
