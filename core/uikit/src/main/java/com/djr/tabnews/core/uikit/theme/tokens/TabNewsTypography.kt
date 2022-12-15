@@ -6,7 +6,7 @@ import androidx.compose.ui.unit.sp
 
 data class TabNewsTypography(
     val HeadingH1: TextStyle = TextStyle(
-        fontSize = 50.sp,
+        fontSize = 35.sp,
         fontWeight = FontWeight.W600
     ),
     val HeadingH2: TextStyle = TextStyle(

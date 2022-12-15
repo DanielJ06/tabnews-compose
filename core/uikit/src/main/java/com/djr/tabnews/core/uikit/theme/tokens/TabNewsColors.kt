@@ -11,6 +11,7 @@ data class TabNewsColors(
     val accentFade: List<Color> = listOf(accentPrimary, accentSecondary),
 
     val borderDark: Color = Color(0xFF444D56),
+    val borderMedium: Color = Color(0xFF586069),
     val borderNeutral: Color = Color(0xFFD1D5DA),
     val borderLight: Color = Color(0xFFFFFFFF),
 
@@ -22,6 +23,8 @@ data class TabNewsColors(
 
     val tabMoney: Color = Color(0xFF2188FF),
     val tabCash: Color = Color(0xFF34D058),
+
+    val error: Color = Color(0xFFCB2431)
 )
 
 private val CYAN = Color(0xFF80FFEA)
