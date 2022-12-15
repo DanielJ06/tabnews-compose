@@ -18,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.core.view.WindowCompat
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.djr.tabnews.core.uikit.components.tnBottomBar.TnBottomBar
@@ -32,6 +33,7 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalLayoutApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             TabNewsTheme {
                 val navController = rememberNavController()

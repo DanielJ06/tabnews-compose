@@ -25,7 +25,11 @@ fun TnScaffold(
     isError: Boolean = false,
     content: (@Composable () -> Unit)
 ) {
-    Box(modifier = modifier) {
+    Box(
+        modifier = modifier
+            .systemBarsPadding()
+            .navigationBarsPadding()
+    ) {
 
         AnimatedVisibility(
             visible = isLoading && isError.not(),
