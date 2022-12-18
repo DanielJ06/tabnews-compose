@@ -1,25 +1,20 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.lib)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kapt)
     alias(libs.plugins.hilt.android.plugin)
 }
 
 android {
+    namespace = "com.djr.tabnews.features.auth"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.djr.tabnews"
         minSdk = 21
         targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
     }
 
     buildTypes {
@@ -55,23 +50,23 @@ dependencies {
     implementation(project(":core:models"))
     implementation(project(":core:commons"))
     implementation(project(":core:uikit"))
-    implementation(project(":features:main"))
-    implementation(project(":features:auth"))
+
+    implementation(project(":core:domain"))
 
     implementation(libs.androidx.core)
     implementation(libs.bundles.compose)
     implementation(libs.lifecycle.runtime)
     implementation(libs.navigation.compose)
     implementation(libs.android.coroutines)
+    implementation(libs.kotlin.serialization)
 
     implementation(libs.work.runtime)
     implementation(libs.accompanist)
+    implementation(libs.io.coil)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     kapt(libs.google.hilt.compiler)
     implementation(libs.hilt.work)
     implementation(libs.hilt.navigation)
-
-    implementation(libs.bundles.network)
 }
