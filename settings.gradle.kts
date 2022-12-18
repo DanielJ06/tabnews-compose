@@ -34,6 +34,7 @@ include(":core:network")
 include(":core:database")
 include(":core:uikit")
 include(":features:main")
+include(":features:auth")
 
 enableFeaturePreview("VERSION_CATALOGS")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
