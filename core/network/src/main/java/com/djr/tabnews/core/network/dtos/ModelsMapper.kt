@@ -1,11 +1,18 @@
 package com.djr.tabnews.core.network.dtos
 
+import com.djr.tabnews.core.models.auth.LoginModel
 import com.djr.tabnews.core.models.posts.PostContent
 import com.djr.tabnews.core.models.posts.PostModel
 import com.djr.tabnews.core.models.posts.PostReplies
+import com.djr.tabnews.core.network.dtos.auth.LoginRequest
 import com.djr.tabnews.core.network.dtos.post.PostContentResponse
 import com.djr.tabnews.core.network.dtos.post.PostRepliesResponse
 import com.djr.tabnews.core.network.dtos.post.PostResponse
+
+fun LoginModel.toRequest() = LoginRequest(
+    email = email,
+    password = password
+)
 
 fun PostResponse.toModel() = PostModel(
     id = id,
