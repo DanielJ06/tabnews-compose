@@ -37,6 +37,7 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.bundles.markwon)
     implementation(libs.io.coil)
+    implementation(libs.gif.coil)
 
     implementation(libs.navigation.compose)
     implementation(libs.lifecycle.runtime)

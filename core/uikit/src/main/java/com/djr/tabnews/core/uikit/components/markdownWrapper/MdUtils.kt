@@ -2,6 +2,7 @@ package com.djr.tabnews.core.uikit.components.markdownWrapper
 
 import android.content.Context
 import android.graphics.Rect
+import android.os.Build.VERSION.SDK_INT
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
@@ -15,6 +16,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.core.content.res.ResourcesCompat
 import coil.ImageLoader
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
+import coil.request.Disposable
+import coil.request.ImageRequest
+import coil.transform.CircleCropTransformation
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
 import io.noties.markwon.MarkwonConfiguration
@@ -78,7 +84,33 @@ internal fun createRender(
     val coilLoader = ImageLoader.Builder(context)
         .apply {
             crossfade(true)
+            components {
+                if (SDK_INT >= 28) {
+                    add(ImageDecoderDecoder.Factory())
+                } else {
+                    add(GifDecoder.Factory())
+                }
+            }
         }.build()
+
+    val coilPlugin = CoilImagesPlugin.create(
+        object : CoilImagesPlugin.CoilStore {
+            override fun load(drawable: AsyncDrawable): ImageRequest {
+                return ImageRequest.Builder(context)
+                    .defaults(coilLoader.defaults)
+                    .data(drawable.destination)
+                    .crossfade(true)
+                    .transformations(CircleCropTransformation())
+                    .build()
+            }
+
+            override fun cancel(disposable: Disposable) {
+                disposable.dispose()
+            }
+        },
+        coilLoader
+    )
+
     return Markwon.builder(context)
         .usePlugin(HtmlPlugin.create())
         .usePlugin(StrikethroughPlugin.create())

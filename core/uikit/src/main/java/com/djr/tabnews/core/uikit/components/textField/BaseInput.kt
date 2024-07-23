@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -51,13 +52,17 @@ fun BaseInput(
         backgroundColor = TabNewsTheme.colors.accentPrimary.copy(alpha = 0.4f)
     )
 
-    val borderColor = if (isFocused && !error) {
-        TabNewsTheme.colors.accentPrimary
-    } else if (error && !isFocused) {
-        TabNewsTheme.colors.error
-    } else {
-        TabNewsTheme.colors.borderMedium
+    val state by remember(isFocused, error) {
+        mutableStateOf(BaseInputState.getState(error = error, focused = isFocused))
     }
+
+//    val borderColor = if (isFocused) {
+//        TabNewsTheme.colors.accentPrimary
+//    } else if (error) {
+//        TabNewsTheme.colors.error
+//    } else {
+//        TabNewsTheme.colors.borderMedium
+//    }
 
     Column(horizontalAlignment = Alignment.End) {
         Row(
@@ -68,7 +73,7 @@ fun BaseInput(
                 .height(48.dp)
                 .border(
                     width = 1.dp,
-                    color = borderColor,
+                    color = state.getBorderColor(),
                     shape = RoundedCornerShape(TabNewsTheme.spacing.Nano)
                 )
                 .padding(horizontal = TabNewsTheme.spacing.Mini)
@@ -76,7 +81,9 @@ fun BaseInput(
             CompositionLocalProvider(LocalTextSelectionColors provides selectionColors) {
                 BasicTextField(
                     value = value,
-                    onValueChange = { t -> onValueChange.invoke(t) },
+                    onValueChange = { t ->
+                        onValueChange.invoke(t)
+                    },
                     keyboardActions = keyboardActions,
                     keyboardOptions = keyboardOptions,
                     singleLine = singleLine,
@@ -159,4 +166,24 @@ fun BaseInputPreview() {
         Spacer(modifier = Modifier.height(TabNewsTheme.spacing.Nano))
         FilledButton(modifier = Modifier.fillMaxWidth())
     }
+}
+
+private enum class BaseInputState {
+    DEFAULT, FOCUSED, ERROR;
+
+    @Composable
+    fun getBorderColor(): Color = when (this) {
+        DEFAULT -> TabNewsTheme.colors.borderMedium
+        FOCUSED -> TabNewsTheme.colors.accentPrimary
+        ERROR -> TabNewsTheme.colors.error
+    }
+
+    companion object {
+        fun getState(error: Boolean, focused: Boolean): BaseInputState = when {
+            error -> ERROR
+            focused -> FOCUSED
+            else -> DEFAULT
+        }
+    }
+
 }

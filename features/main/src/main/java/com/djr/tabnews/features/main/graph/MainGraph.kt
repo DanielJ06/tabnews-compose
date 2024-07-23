@@ -14,7 +14,7 @@ import com.djr.tabnews.features.main.post.replyChild.navigation.navigateToReplyC
 import com.djr.tabnews.features.main.post.replyChild.navigation.replyChildrenPattern
 
 const val mainGraphRoute = "main_graph"
-val hideBottomNavIn = listOf(
+val hideMainBottomNavIn = listOf(
     postDetailRoutePattern,
     replyChildrenPattern
 )

@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.djr.tabnews.core.extensions.Constants
 import com.djr.tabnews.core.extensions.formatDate
-import com.djr.tabnews.core.extensions.toCapitalized
+import com.djr.tabnews.core.commons.extensions.toCapitalized
 import com.djr.tabnews.core.models.dummies.DUMMY_POST
 import com.djr.tabnews.core.models.posts.PostModel
 import com.djr.tabnews.core.uikit.theme.TabNewsTheme

@@ -7,10 +7,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.consumedWindowInsets
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -24,7 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import com.djr.tabnews.core.uikit.components.tnBottomBar.TnBottomBar
 import com.djr.tabnews.core.uikit.theme.TabNewsTheme
 import com.djr.tabnews.navigation.AppNavigation
-import com.djr.tabnews.navigation.TnNavHost
+import com.djr.tabnews.navigation.RootNavHost
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -60,7 +57,9 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     bottomBar = {
                         AnimatedVisibility(
-                            modifier = Modifier.background(TabNewsTheme.colors.primaryBg),
+                            modifier = Modifier
+                                .background(TabNewsTheme.colors.primaryBg)
+                                .navigationBarsPadding(),
                             visible = bottomBarVisible,
                             enter = slideInVertically(initialOffsetY = { it }),
                             exit = slideOutVertically(targetOffsetY = { it })
@@ -73,7 +72,7 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 ) {
-                    TnNavHost(
+                    RootNavHost(
                         navController = navController,
                         modifier = Modifier
                             .padding(if (bottomBarVisible) it else PaddingValues())

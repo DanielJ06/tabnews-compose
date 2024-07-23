@@ -3,14 +3,15 @@ package com.djr.tabnews.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navOptions
 import com.djr.tabnews.core.models.TopLevelDestination
 import com.djr.tabnews.core.uikit.theme.extensions.isUUID
+import com.djr.tabnews.features.auth.graph.hideAuthBottomNavIn
 import com.djr.tabnews.features.bookmark.bookmarks.navigation.navigateToBookmarks
-import com.djr.tabnews.features.main.graph.hideBottomNavIn
+import com.djr.tabnews.features.main.graph.hideMainBottomNavIn
 import com.djr.tabnews.features.main.graph.navigateToMainGraph
+import com.djr.tabnews.features.main.home.navigation.homeRoute
 import com.djr.tabnews.features.main.post.postDetails.navigation.navigateToPostDetails
 
 class AppNavigation(
@@ -24,7 +25,8 @@ class AppNavigation(
     val destinations = TopLevelDestination.values().asList()
 
     private val routesWithoutBottomNav = listOf(
-        hideBottomNavIn
+        hideMainBottomNavIn,
+        hideAuthBottomNavIn
     ).flatten()
 
     fun canShowBottomBar(route: String): Boolean {
@@ -33,7 +35,7 @@ class AppNavigation(
 
     fun onNavigateToTopDestination(destination: TopLevelDestination) {
         val topNavOptions = navOptions {
-            popUpTo(navController.graph.findStartDestination().id) {
+            popUpTo(homeRoute) {
                 saveState = true
             }
             launchSingleTop = true

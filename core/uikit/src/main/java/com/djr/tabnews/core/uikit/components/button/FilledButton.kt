@@ -19,7 +19,8 @@ fun FilledButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
     text: String = "Click me",
-    isLoading: Boolean = false
+    isLoading: Boolean = false,
+    isEnable: Boolean = true
 ) {
     Button(
         modifier = modifier
@@ -29,14 +30,15 @@ fun FilledButton(
         colors = ButtonDefaults.textButtonColors(
             backgroundColor = TabNewsTheme.colors.accentPrimary.darken(0.65f),
             contentColor = TabNewsTheme.colors.textLight
-        )
+        ),
+        enabled = isEnable && !isLoading
     ) {
         if (isLoading) {
-           CircularProgressIndicator(
-               color = TabNewsTheme.colors.textLight,
-               strokeWidth = 2.dp,
-               modifier = Modifier.size(20.dp)
-           )
+            CircularProgressIndicator(
+                color = TabNewsTheme.colors.textLight,
+                strokeWidth = 2.dp,
+                modifier = Modifier.size(20.dp)
+            )
         } else {
             Text(
                 text = text,

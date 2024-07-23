@@ -7,6 +7,16 @@ plugins {
 }
 
 android {
+
+    signingConfigs {
+        create("release") {
+            storeFile = file("./tabnewsKeyStore")
+            keyAlias = "tn_alias"
+            storePassword = "tabnews"
+            keyPassword = "tabnews"
+        }
+    }
+
     compileSdk = 33
 
     defaultConfig {
@@ -25,6 +35,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
